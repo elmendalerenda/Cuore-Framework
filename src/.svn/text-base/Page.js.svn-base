@@ -1,0 +1,115 @@
+var Page = new Class({
+	
+	services: {},
+	components: {},
+	initializeServices: function(){},
+	initializeComponents: function(){},
+	cleaners:[],
+	baseURL:"",
+	
+	initialize: function(baseURL)
+	{
+	  document.page=this;
+		if ( $defined( baseURL )) this.baseURL = baseURL;
+		this.addService(new LabelsService());
+		this.setUp();
+	},
+	
+	setUp: function()
+	{
+		this.initializeServices();
+		this.initializeComponents();
+	},
+		
+	addService: function(service)
+	{
+		service.setBaseURL(this.getBaseURL());
+		this.services[service.getName()] = service;
+	},
+	
+	getService: function(name)
+	{
+		var result = this.services[name];
+		
+		if(!$defined(result))
+		{
+			result = new NullService();
+		}
+		
+		return result;
+	},
+	
+	addComponent: function(component, container, replaceContent)
+	{
+		this.subcribeComponentEvents(component);
+		component.setName(this.composeName(component, container));
+		this.components[component.getName()] = component;
+
+		if(replaceContent)
+		{
+			this.cleaners.push(component.getName());
+		}
+		component.setContainer(container);
+	},
+	
+	subcribeComponentEvents: function(component)
+	{
+		var events = component.getManagedEvents();
+		events.each(function(event)
+		{
+			(new Bus()).subscribe(component, event);
+		});
+	},
+	
+	draw: function()
+	{
+		$H(this.components).each(function(theComponent)
+		{
+		 	if(this.cleaners.contains(theComponent.getName()))
+			{
+				$(theComponent.getContainer()).set("html", "");
+			}
+			
+			theComponent.draw();
+		}, this);
+	},
+	
+	composeName: function(component, container)
+	{
+		var separator = "_";
+		var baseName = container + separator + component.getTypeName() + separator;
+		var result = "";
+		var ordinal = 1;
+		var gotName = false;
+		
+		while(!gotName)
+		{
+			var temptativeName = baseName + ordinal;
+			if(!$defined(this.components[temptativeName]))
+			{
+				gotName = true;
+				result = temptativeName;
+			}
+			ordinal++;
+		}
+		
+		return result;
+	},
+	
+	getComponent: function(name)
+	{
+		var result = this.components[name];
+		
+		if(!$defined(result))
+		{
+			result = null;
+		}
+		
+		return result;
+	},
+	
+	getBaseURL: function ()
+	{
+		return this.baseURL;
+	}
+});

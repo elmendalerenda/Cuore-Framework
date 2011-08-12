@@ -1,0 +1,23 @@
+var Handler = new Class({
+	
+	owner: undefined,
+  typeName: "Handler",	
+	dispatch: function(params){this.handle(params);} ,
+	handle: function(params){},
+	
+	setOwner:function (anObject)
+	{
+		this.owner=anObject;
+	},
+	
+	getOwner:function ()
+	{
+		return this.owner;
+	},
+	
+	getPage:function()
+	{
+		return document.page;
+	}
+	
+});

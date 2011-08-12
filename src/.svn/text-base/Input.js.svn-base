@@ -1,0 +1,54 @@
+var Input = new Class({
+	
+	Extends: Component,
+	typeName: "Input",
+	label:null,
+	value: "",
+	disabled: false,
+	type: "text",
+	
+	initialize: function(key, type)
+	{
+		this.parent();
+		this.setRenderer(new InputRenderer());
+		if($defined(type))
+		{
+			this.type = type;
+		}
+		this.setI18NKey(key);
+	},
+	
+	
+	setText: function(aText)
+	{
+		this.text = aText;		
+	},
+	
+	getValue: function()
+	{	
+		var theValue = this.renderer.getValue();
+		if (!$defined(theValue))
+		  {
+		    theValue=this.value ;
+		  }
+		return theValue;
+	},
+	
+	setValue: function(value)
+	{
+		this.value = value;
+		this.updateRender();
+	},
+	
+	disable: function()
+	{
+		this.disabled = true;
+		this.updateRender();
+	},
+	
+	enable: function()
+	{
+		this.disabled = false;
+		this.updateRender();
+	}
+});

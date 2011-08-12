@@ -1,0 +1,171 @@
+var Component = new Class( {
+
+	LABELSERVICENAME : "LABELS",
+	handlers : {},
+
+	name : "aComponent",
+	I18NKey : undefined,
+  SEPARATOR : "_",
+	typeName : "Component",
+	text : "",
+	service : "NULL",
+	procedure : "nullProcedure",
+	renderer: undefined,
+	
+	initialize : function() {
+	  this.renderer=new Renderer();
+	},
+	
+	initializeExecutionContext : function(service, procedure) {		
+		if ($defined(service) && $defined(procedure)) {
+			this.service = service;
+			this.procedure = procedure;
+		}
+	}, 
+
+	draw : function() {
+		this.render();
+		this.getLabel();		
+	},
+	
+	render: function()
+	{
+	  this.renderer.render(this);
+	},
+	
+	updateRender: function()
+	{
+	  this.renderer.update(this);
+	},
+	
+	destroy : function() {
+		this.renderer.erase();
+		var bus = new Bus();
+		bus.unsubscribe(this, this.getManagedEvents());
+	},
+
+	execute : function(aService, aProcedure, params, asynchronous) {
+		
+		var theService = ($defined(aService))?aService:this.service;
+		var theProcedure = ($defined(aProcedure))?aProcedure:this.procedure;
+				
+		serviceInstance = this.getService(theService);
+		if (serviceInstance)
+		{
+			serviceInstance.execute(theProcedure, params, asynchronous);
+		}
+	},
+
+	eventDispatch : function(event, params) {
+		if ($defined(this.handlers[event]))
+		{
+			this.handlers[event].each(function(handler) {
+				handler.handle(params);
+			});
+		}
+	},
+
+	addHandler : function(event, handler) {
+		if (!$defined(this.handlers[event])) {
+			this.handlers[event] = [];
+		}
+		handler.setOwner(this);
+		this.handlers[event].push(handler);
+	},
+	
+	addDispatcher : function(event, handler) {
+		this.addHandler (event, handler);
+	},
+
+	addClass: function(aClass) {
+     this.renderer.addClass(aClass);
+  },
+	
+  removeClass: function(aClass) {
+     this.renderer.removeClass(aClass);
+  },
+  
+	getText : function() {
+		return this.text;
+	},
+	
+	getTypeName : function() {
+		return this.typeName;
+	},
+
+	getName : function() {
+		return this.name;
+	},
+
+	setName : function(name) {
+		this.name = name;
+	},
+
+	setContainer : function(container) {
+		this.renderer.setContainer(container);
+	},
+
+	getService : function(aService) {
+		
+		var theService = ($defined(aService))?aService:this.service;
+		var result = null;
+		
+		if ($defined(document.page))
+		{
+			result = document.page.getService(theService);
+		}
+		return result;
+	},
+	
+	getLabelService : function() {
+		return  this.getService(this.LABELSERVICENAME);
+	},
+
+	getLabel : function() {
+		
+		if(!$defined(this.I18NKey)) return;
+			
+		var labelService = this.getLabelService();
+		var params = {
+			key : this.I18NKey
+		};
+		if (labelService) {
+			labelService.execute("getLabel", params, true);
+		}
+			
+	},
+
+	getUniqueID : function() {
+		return this.renderer.innerDivName(this.name);
+	},
+	
+	getManagedEvents : function() {
+		return $H(this.handlers).getKeys();
+	},
+
+	setText : function(text) {
+		this.text = text;
+		this.render();
+	},
+	
+	setI18NKey: function(key) {
+		
+		if(!$defined(key)) return;
+		
+		this.I18NKey = key;
+		this.addHandler("LABELS_getLabel_EXECUTED_" + key,
+				new SetTextHandler());
+		new Bus().subscribe(this, "LABELS_getLabel_EXECUTED_" + key);
+	},
+
+	getI18NKey: function(){
+		return this.I18NKey;
+	},
+	
+	setRenderer: function(renderer){
+	  this.renderer = renderer; 
+	}
+
+	
+
+});

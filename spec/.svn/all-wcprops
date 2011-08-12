@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/cuore/!svn/ver/47/trunk/spec
+END
+busSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/cuore/!svn/ver/2/trunk/spec/busSpec.js
+END
+printHandlerSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/cuore/!svn/ver/21/trunk/spec/printHandlerSpec.js
+END
+nullServiceSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/cuore/!svn/ver/7/trunk/spec/nullServiceSpec.js
+END
+journeySpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/cuore/!svn/ver/9/trunk/spec/journeySpec.js
+END
+switchCollapseAndUncollapseHandlerSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/cuore/!svn/ver/27/trunk/spec/switchCollapseAndUncollapseHandlerSpec.js
+END
+executorHandlerSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/cuore/!svn/ver/13/trunk/spec/executorHandlerSpec.js
+END
+buttonServiceSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/cuore/!svn/ver/14/trunk/spec/buttonServiceSpec.js
+END
+switchButtonSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/cuore/!svn/ver/46/trunk/spec/switchButtonSpec.js
+END
+setTextHandlerSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/cuore/!svn/ver/10/trunk/spec/setTextHandlerSpec.js
+END
+labelPanelSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/cuore/!svn/ver/19/trunk/spec/labelPanelSpec.js
+END
+inputSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/cuore/!svn/ver/46/trunk/spec/inputSpec.js
+END
+serviceSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/cuore/!svn/ver/8/trunk/spec/serviceSpec.js
+END
+collapsablePanelSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/cuore/!svn/ver/38/trunk/spec/collapsablePanelSpec.js
+END
+componentSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/cuore/!svn/ver/46/trunk/spec/componentSpec.js
+END
+collapsableQuintSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/cuore/!svn/ver/46/trunk/spec/collapsableQuintSpec.js
+END
+numericSelectorSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/cuore/!svn/ver/46/trunk/spec/numericSelectorSpec.js
+END
+delegableSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/cuore/!svn/ver/40/trunk/spec/delegableSpec.js
+END
+rendererSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/cuore/!svn/ver/46/trunk/spec/rendererSpec.js
+END
+buttonSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/cuore/!svn/ver/46/trunk/spec/buttonSpec.js
+END
+timeRangeSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/cuore/!svn/ver/27/trunk/spec/timeRangeSpec.js
+END
+pageSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/cuore/!svn/ver/6/trunk/spec/pageSpec.js
+END
+handlerSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/cuore/!svn/ver/5/trunk/spec/handlerSpec.js
+END
+nestableComponentSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/cuore/!svn/ver/46/trunk/spec/nestableComponentSpec.js
+END
+debuggableSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/cuore/!svn/ver/37/trunk/spec/debuggableSpec.js
+END
+labelsServiceSpec.js
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/cuore/!svn/ver/17/trunk/spec/labelsServiceSpec.js
+END

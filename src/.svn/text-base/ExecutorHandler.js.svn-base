@@ -1,0 +1,12 @@
+var ExecutorHandler= new Class({
+	Extends: Handler,
+	ownerFunction: undefined,
+  typeName:"ExecutorHandler",	
+	initialize: function(ownerFunction){
+		this.ownerFunction = ownerFunction;
+	},
+	
+	handle: function(params){
+		this.getOwner()[this.ownerFunction](params);
+	}
+});

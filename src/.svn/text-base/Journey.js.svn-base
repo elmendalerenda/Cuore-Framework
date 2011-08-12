@@ -1,0 +1,122 @@
+var Journey = new Class({
+		
+    start: 0,
+    end: 1440,
+    itsGranularity: 60,
+    minutesInAnHour: 60,    
+    
+    initialize: function(start, end)
+    {
+      
+      if($defined(start) && $defined(end)){
+        this.start = this.convertToMinutesDay(start);
+        this.end = this.convertToMinutesDay(end);
+      }
+      
+    },
+
+    starts: function()
+    {
+      return this.normalize(this.start);
+    },
+    
+    ends: function()
+    {
+      return this.normalize(this.end);
+    },
+    
+    granularity: function() {
+      return this.itsGranularity;
+    },
+
+    withGranularityOf: function(granularity) {
+      this.itsGranularity = parseInt(granularity);
+    },
+
+    normalize: function(hour) {
+      if(isNaN(hour)){
+        return undefined;
+      }
+      return this.formatHour(hour);
+    },
+    
+    convertToMinutesDay: function(anHour)
+	  {
+      var hoursInADay = 24;
+	    var decimalBase = 10;
+	    var minutes=0;
+      anHour=anHour+"";
+      var chunks= anHour.split(":",2);
+      hour=parseInt(chunks[0], decimalBase);
+      if ($defined(chunks[1]))
+      {
+        minutes=parseInt(chunks[1], decimalBase);
+      }
+      
+      if( (minutes >= this.minutesInAnHour) || (minutes < 0) ){
+        return null;
+      }
+      if( (hour > hoursInADay) || (hour < 0) ){
+        return null;
+      }
+      
+      var minutesDay = (hour * this.minutesInAnHour) + minutes;
+      return minutesDay;
+    },
+	
+    formatHour:function(minutes){
+      var firstNumberWith2Digits = 10;
+      var hour    = Math.floor(minutes / this.minutesInAnHour);
+      var minutes = minutes % this.minutesInAnHour;
+      var formatedMinutes = minutes < firstNumberWith2Digits ? "0"+minutes : minutes;
+      var formatedHour = hour < firstNumberWith2Digits ? "0"+hour : hour;
+      return formatedHour + ":" + formatedMinutes;
+    },	
+    
+    isValid: function(){
+      return this.start < this.end;
+    },
+    
+    slots: function(){
+      theSlots = new Array();
+      index = 0;
+      for(var count=this.start; (count + this.itsGranularity) <= this.end; count = count + this.itsGranularity)
+      {
+        initialMinute = count;
+        journeyStart = this.formatHour(initialMinute);
+        journeyEnd = this.formatHour(initialMinute + this.itsGranularity);
+        theSlots[index++] = new Journey(journeyStart, journeyEnd);
+      }
+      
+      lastSlot = theSlots[index-1];
+      if (lastSlot.ends() != this.ends()) {
+    	theSlots[index] = new Journey(lastSlot.ends(), this.ends());
+      }
+      
+      return theSlots;
+    },    
+    
+    toString: function(){
+      return this.starts() + "-" + this.ends();
+    },
+    
+    setStartTime: function(hour){
+        if(! $defined(hour)){return;}
+        
+        this.start = this.convertToMinutesDay(hour);
+        if (this.start >= this.end){
+        	this.start = this.end - this.itsGranularity;
+        }  
+    },
+    
+    setEndTime: function(dayTime){
+        if( ! $defined(dayTime)){return;}
+        
+        this.end=this.convertToMinutesDay(dayTime);
+        if (this.end <= this.start){
+        	this.end = this.start + this.itsGranularity;
+        }
+    }
+    
+	});
+

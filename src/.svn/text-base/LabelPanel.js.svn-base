@@ -1,0 +1,18 @@
+var LabelPanel = new Class({
+	Extends: Component,
+	typeName: "LabelPanel",
+	
+	LABELSERVICENAME: "LABELS",
+	
+	initialize: function(key)
+	{
+		this.parent();
+		this.setI18NKey(key);
+	},
+	
+	draw: function()
+	{
+		this.parent();
+		this.addClass("labelPanel");
+	}
+});

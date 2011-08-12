@@ -1,0 +1,52 @@
+var ButtonRenderer = new Class({
+    
+    Extends: Renderer,
+    CSSDISABLED:"disabled",
+    span:undefined,
+    
+    draw: function(component)
+    {
+      this.panel = new Element("a", {
+          id: this.innerDivName(component.getName()),
+          href: "#"
+          }).inject(this.container);
+      this.panel.addClass(component.getButtonName()); 
+		
+      this.span = new Element("span").inject(this.panel);
+    },
+
+	updateWhenDrawn: function(component)
+	{
+	    this.putText(component);
+      this.setClassCSS(component);
+      this.addEvents(component);
+      this.setCurrentClasses();
+	  
+	},
+	
+	putText:function(component)
+	{
+	    var text = component.getText();
+      if(!$defined(text))
+      {
+        text = component.getButtonName();
+      }
+      this.span.set("text", text);		
+	},
+	
+	setClassCSS:function(component)
+	{
+	  this.removeClass(this.CSSDISABLED);
+      if (!component.isEnable())
+        this.addClass(this.CSSDISABLED);
+	},
+	
+	addEvents: function(component)
+	{
+	    this.panel.removeEvents('click');
+	    if (component.isEnable()) {
+	      this.panel.addEvent("click", function(e){if(e)e.stop();});
+	      this.panel.addEvent("click", component.click.bind(component));
+	    }
+	},
+});

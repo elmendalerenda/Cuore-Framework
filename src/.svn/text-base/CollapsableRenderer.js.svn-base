@@ -1,0 +1,32 @@
+var CollapsableRenderer = new Class({
+    
+    Extends: Renderer,    
+    COLLAPSED: "collapsed",
+    UNCOLLAPSED: "uncollapsed",
+	
+    draw: function(component)
+    {
+        this.panel = new Element('div', {'id': this.innerDivName(component.getName())}).inject(this.container);
+        this.panel.setStyles({'height':'0px','overflow':'hidden','padding-top':'0px', 'padding-bottom':'0px'});
+    },
+    
+    updateWhenDrawn:function (component)
+    {
+      this.parent(component);
+      this.collapseBehaviour(component);
+      this.setCurrentClasses();
+    },
+		
+    collapseBehaviour: function(component)
+    {	
+			this.removeClass(this.COLLAPSED);
+			this.removeClass(this.UNCOLLAPSED);
+			if (component.isCollapsed()){
+			  this.panel.setStyle('height', '0px');
+			  this.addClass(this.COLLAPSED);
+			}else{
+			  this.panel.setStyle('height',  this.panel.getScrollSize().y);
+			  this.addClass(this.UNCOLLAPSED);
+			}
+    },
+});

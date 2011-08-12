@@ -1,0 +1,77 @@
+var TimeRange = new Class({
+	
+	Extends: Component,
+	typeName: "TimeRange",
+	
+	journey: undefined,
+
+	startHourSelect : null,
+	endHourSelect : null,
+	label : null,
+	
+	initialize : function(key,granularity) {
+		this.parent();
+		this.setRenderer(new TimeRangeRenderer());
+		this.journey=new Journey();
+		if ($defined(granularity))
+		{
+			 this.journey.withGranularityOf(granularity);
+		}
+		this.setI18NKey(key);
+	},
+	
+	
+	
+	setStartHour: function(hour)
+	{
+	  if (!$defined(hour))
+	  {
+	    hour = this.renderer.getStartTime();
+	  }
+		this.journey.setStartTime(hour);
+		this.updateRender();
+		this.emitValues();
+	},
+	
+	setEndHour: function(hour)
+	{
+	  if (!$defined(hour))
+	  {
+	    hour = this.renderer.getEndTime();
+	  }
+		this.journey.setEndTime(hour);
+		this.updateRender();
+		this.emitValues();
+	},
+	
+	
+	setText: function(aText)
+	{
+		this.text = aText;
+		this.updateRender();
+	},
+	
+	
+	emitValues: function()
+	{
+		bus = this.getBus();
+		var params = {"startHour":this.getStartHour(), "endHour":this.getEndHour()};
+		bus.emit("COMPONENT_"+this.name+"_CHANGED", params);	
+	},
+	
+	getBus: function()
+	{
+		return new Bus();
+	},
+	
+	getStartHour: function()
+	{
+		return this.journey.starts();
+	},
+	
+	getEndHour: function()
+	{
+		return this.journey.ends();
+	}
+	
+});

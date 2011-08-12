@@ -1,0 +1,76 @@
+var Service = new Class({
+	
+	name: "ABSTRACT",
+  typeName: "Service",	
+	SEPARATOR: "_",
+	
+	executionPrefix:"EXECUTED",
+	
+	lastDataSent: undefined,
+	baseURL:"",
+	
+	
+	execute: function(procedure, params, asynchronous)
+	{
+		var eventName = this.getEventNameForExecution(procedure);
+		
+		this[procedure](params, eventName);
+		
+		if(!$defined(asynchronous) || asynchronous == false)
+		{
+			this.emit(eventName, params);
+		}
+	},
+	
+	request: function(url, params, eventName)
+	{
+		new Request.JSON({
+			url: url,
+			data: {
+				"query": JSON.encode(params)
+			},
+			onComplete: function(response)
+			{
+				this.emit(eventName, response);
+				
+			}.bind(this)
+		}).send();
+		
+		this.lastDataSent = params;
+	},
+	
+	emit: function(event, params)
+	{
+		this.getBus().emit(event, params);
+	},
+	
+	getEventNameForExecution: function(procedure)
+	{			
+		return this.getName() + this.SEPARATOR + procedure + this.SEPARATOR + this.executionPrefix;
+	},
+	
+	getName: function()
+	{
+		return this.name;
+	},
+	
+	getLastDataSent: function()
+	{
+		return this.lastDataSent;
+	},
+	
+	getBaseURL: function()
+	{
+		return this.baseURL;
+	},
+	
+	setBaseURL: function(baseURL)
+	{
+		this.baseURL = baseURL ;
+	},
+	
+	getBus:function ()
+	{
+		return new Bus();
+	}
+});

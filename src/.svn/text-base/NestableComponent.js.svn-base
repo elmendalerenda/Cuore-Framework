@@ -1,0 +1,55 @@
+var NestableComponent = new Class( {
+	Extends: Component,
+	hostedComponents:[],
+	
+	host: function(anyComponent)
+	{		
+		this.hostedComponents.push(anyComponent);
+	},
+	
+	hosted: function(anyComponent)
+	{
+		return this.hostedComponents;
+	},
+	
+	getManagedEvents: function() {
+	  var result=[];
+	  result = this.parent();
+	  this.hostedComponents.each(function(aComponent){
+	      result.combine(aComponent.getManagedEvents());
+	  },this);
+		return result;
+	},
+	
+	eventDispatch: function(event, params) {
+	  this.parent(event,params);
+	  this.hostedComponents.each(function(aComponent){
+	      aComponent.eventDispatch(event,params);
+	  });
+	},
+	
+	draw: function(){
+	  this.parent();
+	  this.hostedComponents.each(function(aComponent){
+	      aComponent.setContainer($(this.renderer.innerDivName(this.name)));
+	      aComponent.draw();
+	  },this);
+	},	
+
+	destroy: function(){
+	   this.hostedComponents.each(function(aComponent){
+	      aComponent.destroy();
+	  }); 
+	  this.parent(); 
+	},
+	
+	setName: function(name){
+	  this.parent(name);
+	  var ordinal = 1;    
+	  this.hostedComponents.each(function(aComponent){
+	      aComponent.setName(this.getName()+this.SEPARATOR+aComponent.getName()+this.SEPARATOR+ordinal);
+	      ordinal++;
+	  },this);	   
+	},
+	 	
+});

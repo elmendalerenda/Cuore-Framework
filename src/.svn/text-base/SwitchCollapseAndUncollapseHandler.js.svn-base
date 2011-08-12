@@ -1,0 +1,15 @@
+var SwitchCollapseAndUncollapseHandler = new Class({
+	Extends: Handler,
+	typeName: "SwitchCollapseAndUncollapseHandler",
+	DOMButton: undefined,
+	
+	handle: function()
+	{
+		if(this.owner.isCollapsed())
+		{
+			this.owner.uncollapse();
+			return
+		}		
+		this.owner.collapse();
+	}
+});

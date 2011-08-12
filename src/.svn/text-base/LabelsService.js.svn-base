@@ -1,0 +1,73 @@
+var LabelsService = new Class({
+	
+	Extends: Service,
+	typeName:'LabelsService',
+	name: "LABELS",
+	cache: {},
+	locale: undefined,
+	
+	initialize: function()
+	{	
+		if($defined(document.labels))
+		{
+			this.cache = document.labels;
+		}
+		this.setLocale(navigator.language || navigator.browserLanguage);
+	},
+	
+	setLocale: function (aLocale)
+	{
+		if ($defined (aLocale))
+		{
+			this.locale=aLocale;
+			if (!$defined(this.cache[this.locale])) {
+				this.cache[this.locale] = {};
+			}
+		}
+	},
+	
+	getLabel: function(params, eventName)
+	{
+		var eventNameWithKey = eventName + this.SEPARATOR + params.key;
+		var cachedLabel = this.fromCache(params.key);
+		if($defined(cachedLabel))
+		{
+			var cachedParams = [];
+			cachedParams["answer"]=cachedLabel;
+			this.emit(eventNameWithKey,cachedParams);
+		}
+		else
+		{
+			var dataToSend = {"LABEL_KEY":params.key,
+							  "LOCALE"	: this.locale				
+							 };
+			var url =  this.getBaseURL()+ "labels/get";
+			this.request(url, dataToSend, eventNameWithKey);
+		}
+	},
+	
+	fromCache: function(key)
+	{
+		return this.cache[this.locale][key];
+	},
+	
+	emit: function(event, params)
+	{
+		
+		var match=event.match(/_([a-zA-Z\.]*)$/);
+		var theKey=null;
+		
+		if ($defined(match)) theKey=match[1];
+		if (!$defined(theKey) )return;
+		if (!$defined(params) )params={};
+		if ($defined(params.answer))
+		{
+			this.cache[this.locale][theKey]=params.answer;
+		}
+		else
+		{
+			params.answer = theKey;
+		}
+		this.parent(event,params);
+	}
+});

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/cuore/!svn/ver/45/trunk/lib/yui-compressor
+END
+yuicompressor-2.4.6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/cuore/!svn/ver/43/trunk/lib/yui-compressor/yuicompressor-2.4.6.jar
+END
+distribute.sh
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/cuore/!svn/ver/45/trunk/lib/yui-compressor/distribute.sh
+END

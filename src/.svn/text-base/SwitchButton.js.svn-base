@@ -1,0 +1,105 @@
+var SwitchButton = new Class({
+	
+	Extends: Button,	
+	typeName: "SwitchButton",
+	active: true,
+	activeKey: undefined,
+	inactiveKey: undefined,	
+	activeLabel: undefined,
+	inactiveLabel : undefined,
+	
+	
+	initialize: function(buttonName, activeKey, inactiveKey)
+	{
+		this.parent(buttonName);
+		this.renderer=new SwitchButtonRenderer();
+		this.activeLabel=this.text;
+		this.inactiveLabel=this.text;
+		this.activeKey = activeKey;
+		this.inactiveKey = inactiveKey;
+		
+		this.addLabelHandler(this.activeKey, "setActiveLabel");
+		this.addLabelHandler(this.inactiveKey, "setInactiveLabel");
+	},
+	
+	addLabelHandler : function(key, procedure)
+	{
+		this.addHandler("LABELS_getLabel_EXECUTED_"+ key, new ExecutorHandler(procedure));
+		new Bus().subscribe(this, "LABELS_getLabel_EXECUTED_" + key);
+		
+	},
+	
+	draw: function()
+	{
+		this.getLabel(this.activeKey);
+		this.getLabel(this.inactiveKey);
+		this.render();
+	},
+	
+	click: function(executeParent)
+	{
+		if(executeParent || (!$defined(executeParent)))
+		{
+			this.parent();
+		}
+		
+		this.switchState();
+	},
+	
+	switchState: function()
+	{
+		this.active = !this.active;
+		this.updateRender();	
+	},
+	
+	isActive: function()
+	{
+		return this.active;
+	},
+	
+	getLabel: function(key)
+	{
+		if (!$defined(key))return;
+		var labelService = this.getLabelService();
+		var params = {"key": key};
+		if(labelService)
+		{
+			labelService.execute("getLabel", params, true);
+		}	
+	},
+	
+	setActiveLabel: function(message)
+	{
+		this.activeLabel = message.answer;
+		this.updateRender();
+	},
+	
+	setInactiveLabel: function(message)
+	{
+		this.inactiveLabel = message.answer;
+		this.updateRender();
+	},
+	
+	getActiveLabel: function()
+	{
+		return this.activeLabel;		
+	},
+	
+	getInactiveLabel: function()
+	{
+		return this.inactiveLabel;	
+	},
+	
+	getActiveKey: function()
+	{
+		return this.activeKey;		
+	},
+	
+	getInactiveKey: function()
+	{
+		return this.inactiveKey;	
+	}
+	
+	
+	
+});
