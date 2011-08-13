@@ -1,10 +1,10 @@
 var CollapsablePanel = new Class({
-	Extends: Component,
+    Extends: Component,
 
     initialize: function (service, procedure) {
         this.parent(service, procedure);
-	    this.typeName = "CollapsablePanel";
-	    this.collapsed = true;
+        this.typeName = "CollapsablePanel";
+        this.collapsed = true;
         this.renderer = new CollapsableRenderer();
         this.addClass("collapsablePanel");
     },

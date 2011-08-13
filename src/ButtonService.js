@@ -1,12 +1,12 @@
 var ButtonService = new Class({
-	Extends: Service,
+    Extends: Service,
 
-    initalize: function() {
-	    this.name = 'BUTTON';
-	    this.typeName = 'ButtonService';
-	    this.executionPrefix = 'CLICKED';	
+    initalize: function () {
+        this.name = 'BUTTON';
+        this.typeName = 'ButtonService';
+        this.executionPrefix = 'CLICKED';
     },
- 
+
     execute: function (procedure, params) {
         params = params || {};
         params.buttonName = procedure;

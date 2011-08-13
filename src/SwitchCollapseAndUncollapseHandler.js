@@ -1,5 +1,5 @@
 var SwitchCollapseAndUncollapseHandler = new Class({
-	Extends: Handler,
+    Extends: Handler,
 
     initialize: function () {
         this.typeName = "SwitchCollapseAndUncollapseHandler";

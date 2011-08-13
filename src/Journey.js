@@ -1,12 +1,12 @@
 var Journey = new Class({
 
     initialize: function (start, end) {
-	    var allValues = (start && end);
-	
-	    this.itsGranularity = 60;
-	    this.minutesInAnHour = 60;
-	    this.start = allValues ? this.convertToMinutesDay(start) : 0;
-	    this.end = allValues ? this.convertToMinutesDay(end) : 1440;
+        var allValues = (start && end);
+
+        this.itsGranularity = 60;
+        this.minutesInAnHour = 60;
+        this.start = allValues ? this.convertToMinutesDay(start) : 0;
+        this.end = allValues ? this.convertToMinutesDay(end) : 1440;
     },
 
     starts: function () {
@@ -32,7 +32,7 @@ var Journey = new Class({
     },
 
     convertToMinutesDay: function (anHour) {
-	    var hoursInADay = 24;
+        var hoursInADay = 24;
         var hour = this._parseHour(anHour);
         var minutes = this._parseMinutes(anHour);
         var notValidMinute = (minutes >= this.minutesInAnHour) || (minutes < 0);
@@ -43,19 +43,19 @@ var Journey = new Class({
         return (hour * this.minutesInAnHour) + minutes;
     },
 
-    _parseHour: function(anHour) {
-	      return Number(this._getChunks(anHour)[0]);        
+    _parseHour: function (anHour) {
+        return Number(this._getChunks(anHour)[0]);
     },
 
-	_parseMinutes: function(anHour) {
-		  return ~~(this._getChunks(anHour)[1]);  
+    _parseMinutes: function (anHour) {
+        return ~~ (this._getChunks(anHour)[1]);
     },
 
-    _getChunks: function(anHour) {
-	      var anHour = anHour.toString(); 
-	      return anHour.split(":", 2);
+    _getChunks: function (anHour) {
+        var anHour = anHour.toString();
+        return anHour.split(":", 2);
     },
-              
+
     formatHour: function (minutes) {
         var firstNumberWith2Digits = 10;
         var hour = Math.floor(minutes / this.minutesInAnHour);
@@ -72,7 +72,7 @@ var Journey = new Class({
 
     slots: function () {
         var theSlots = [];
-        var finalMinute  = this.end - this.itsGranularity;
+        var finalMinute = this.end - this.itsGranularity;
         var index = 0;
         for (var initialMinute = this.start; initialMinute <= finalMinute; initialMinute += this.itsGranularity) {
             var journeyStart = this.formatHour(initialMinute);

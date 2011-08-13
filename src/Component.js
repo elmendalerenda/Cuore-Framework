@@ -1,15 +1,15 @@
 var Component = new Class({
-    
+
     initialize: function () {
-	    this.LABELSERVICENAME = 'LABELS';
-	    this.name = 'aComponent'; 
-	    this.typeName = 'Component';
-	    this.service = 'NULL';
-	    this.procedure = 'nullProcedure';
-	    this.I18NKey = null;
-	    this.handlers = {};
-		this.SEPARATOR = "_";
-	    this.text = '';
+        this.LABELSERVICENAME = 'LABELS';
+        this.name = 'aComponent';
+        this.typeName = 'Component';
+        this.service = 'NULL';
+        this.procedure = 'nullProcedure';
+        this.I18NKey = null;
+        this.handlers = {};
+        this.SEPARATOR = "_";
+        this.text = '';
         this.renderer = new Renderer();
     },
 
@@ -50,13 +50,13 @@ var Component = new Class({
     },
 
     eventDispatch: function (eventName, params) {
-	    var eventsToDispatch = this.handlers[eventName];
-	    console.log(eventsToDispatch);
-	    if(!eventsToDispatch) return;
-	
-	    for(var i = 0, handler; handler = eventsToDispatch[i]; i++) {
-		    handler.handle(params); 
-	    } 
+        var eventsToDispatch = this.handlers[eventName];
+        console.log(eventsToDispatch);
+        if (!eventsToDispatch) return;
+
+        for (var i = 0, handler; handler = eventsToDispatch[i]; i++) {
+            handler.handle(params);
+        }
     },
 
     addHandler: function (eventName, handler) {
@@ -106,12 +106,12 @@ var Component = new Class({
         return this.getService(this.LABELSERVICENAME);
     },
 
-    getLabel: function () { 
+    getLabel: function () {
         if (!this.I18NKey || !this.getLabelService()) return;
 
         var params = {
             key: this.I18NKey
-        }; 
+        };
 
         this.getLabelService().execute("getLabel", params, true);
     },
@@ -121,10 +121,10 @@ var Component = new Class({
     },
 
     getManagedEvents: function () {
-	    // @TODO map
-	    var handlersKeys = [];
-        for(var handler in this.handlers) {
-	         handlersKeys.push(handler);
+        // @TODO map
+        var handlersKeys = [];
+        for (var handler in this.handlers) {
+            handlersKeys.push(handler);
         }
         return handlersKeys;
     },

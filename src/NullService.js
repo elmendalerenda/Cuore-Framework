@@ -2,9 +2,9 @@ var NullService = new Class({
     Extends: Service,
     Implements: Debuggable,
 
-	initialize: function () {
+    initialize: function () {
         this.typeName = "NullService";
-	    this.name = "NULL";
+        this.name = "NULL";
     },
 
     execute: function (procedure, params, asynchronous) {

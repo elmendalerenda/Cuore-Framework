@@ -1,10 +1,10 @@
 var Bus = new Class({
-	Implements: Debuggable,
+    Implements: Debuggable,
 
     initialize: function () {
-	   this.instanceName = "Bus";
-	   this.typeName = "Bus";  
-       this.subscriptions = [];
+        this.instanceName = "Bus";
+        this.typeName = "Bus";
+        this.subscriptions = [];
 
         document[this.instanceName] = document[this.instanceName] || this;
         return document[this.instanceName];
@@ -79,4 +79,3 @@ var Bus = new Class({
         this.subscriptions = [];
     }
 });
-

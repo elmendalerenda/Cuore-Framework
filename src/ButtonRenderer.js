@@ -1,5 +1,5 @@
 var ButtonRenderer = new Class({
-	Extends: Renderer,
+    Extends: Renderer,
 
     draw: function (component) {
         this.panel = new Element("a", {
@@ -13,7 +13,7 @@ var ButtonRenderer = new Class({
     },
 
     updateWhenDrawn: function (component) {
-	    console.log('test');
+        console.log('test');
         this.putText(component);
         this.setClassCSS(component);
         this.addEvents(component);
@@ -26,13 +26,13 @@ var ButtonRenderer = new Class({
     },
 
     setClassCSS: function (component) {
-	    var CSSDISABLED = 'disabled';
-	  
-	    if (!component.isEnable()) {
-		    this.addClass(CSSDISABLED);
-	    } else {
-		    this.removeClass(CSSDISABLED);
-	    } 
+        var CSSDISABLED = 'disabled';
+
+        if (!component.isEnable()) {
+            this.addClass(CSSDISABLED);
+        } else {
+            this.removeClass(CSSDISABLED);
+        }
     },
 
     addEvents: function (component) {

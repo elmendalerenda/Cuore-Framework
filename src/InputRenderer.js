@@ -1,6 +1,6 @@
 var InputRenderer = new Class({
-	Extends: Renderer,
-	
+    Extends: Renderer,
+
     draw: function (component) {
         this.panel = new Element('div', {
             'id': this.innerDivName(component.getName())

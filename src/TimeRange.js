@@ -1,12 +1,12 @@
 var TimeRange = new Class({
-	Extends: Component,
+    Extends: Component,
 
     initialize: function (key, granularity) {
         this.parent();
         this.typeName = 'TimeRange';
-	    this.label = null;
-	    this.startHourSelect = null;
-	    this.endHourSelect = null;
+        this.label = null;
+        this.startHourSelect = null;
+        this.endHourSelect = null;
         this.setRenderer(new TimeRangeRenderer());
         this.journey = new Journey();
         if (granularity) {

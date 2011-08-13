@@ -1,7 +1,7 @@
 var NumericSelectorRenderer = new Class({
-	Extends: InputRenderer,
+    Extends: InputRenderer,
 
-    initalize: function() {
+    initalize: function () {
         this.valueDisplayed = null;
     },
 

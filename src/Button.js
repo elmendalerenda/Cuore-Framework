@@ -1,18 +1,18 @@
 var Button = new Class({
-	Extends: Component,
+    Extends: Component,
 
     initialize: function (buttonName, key) {
-       	this.parent();
+        this.parent();
         this.typeName = 'Button';
         this.service = 'BUTTON';
         this.procedure = 'aButton';
         this.BUTTONSERVICE = "BUTTON";
-		this.DOMClass = "button";
-	    this.data = null;
-	    this.text = 'CLICK!';
-	    this.buttonName = "aButton";
-	    this.enabled = true;
-	    this.asynchronous = false;
+        this.DOMClass = "button";
+        this.data = null;
+        this.text = 'CLICK!';
+        this.buttonName = "aButton";
+        this.enabled = true;
+        this.asynchronous = false;
         this.renderer = new ButtonRenderer();
         this.initializeExecutionContext(this.BUTTONSERVICE, buttonName);
         this.buttonName = this.procedure;

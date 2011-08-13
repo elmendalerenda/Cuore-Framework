@@ -1,24 +1,24 @@
 var TimeRangeRenderer = new Class({
-	Extends: Renderer,
+    Extends: Renderer,
 
-    initalize: function() {
-	    this.label = null;
-	    this.startHourSelect = null;
-	    this.endHourSelect = null;
-    },  
+    initalize: function () {
+        this.label = null;
+        this.startHourSelect = null;
+        this.endHourSelect = null;
+    },
 
     draw: function (component) {
         this.parent(component);
         this.panel.erase("text");
         this.addClass("timeRange");
         this.label = new Element("label").inject(this.panel);
-        
+
         this.startHourSelect = new Element("select", {
             "class": "hourSelect startHourSelect"
         }).inject(this.panel);
 
         this.startHourSelect.addEvent("change", component.setStartHour.bind(component));
-        
+
         this.endHourSelect = new Element("select", {
             "class": "hourSelect endHourSelect"
         }).inject(this.panel);
@@ -42,8 +42,8 @@ var TimeRangeRenderer = new Class({
     constructStartOptions: function (component) {
         this.clearOptions(this.startHourSelect);
         var slots = this.getSlots("00:00", component.journey.ends(), component.journey.granularity());
-        
-       for(var i = 0, slot; slot = slots[i]; i++) {
+
+        for (var i = 0, slot; slot = slots[i]; i++) {
             new Element('option', {
                 "value": slot.starts(),
                 "text": slot.starts()
@@ -54,15 +54,15 @@ var TimeRangeRenderer = new Class({
     constructEndOptions: function (component) {
         this.clearOptions(this.endHourSelect);
         var slots = this.getSlots(component.journey.starts(), "24:00", component.journey.granularity());
-        
-        for(var i = 0, slot; slot = slots[i]; i++) {
+
+        for (var i = 0, slot; slot = slots[i]; i++) {
             new Element('option', {
                 "value": slot.ends(),
                 "text": slot.ends()
             }).inject(this.endHourSelect);
         }
     },
-                
+
     getSlots: function (start, end, granularity) {
         var aJourney = new Journey(start, end);
         aJourney.withGranularityOf(granularity);
@@ -72,8 +72,8 @@ var TimeRangeRenderer = new Class({
 
     clearOptions: function (selectElement) {
         var options = selectElement.getChildren("option");
-        
-        for(var i = 0, item; item = options[i]; i++) {
+
+        for (var i = 0, item; item = options[i]; i++) {
             item.destroy();
         }
     },
