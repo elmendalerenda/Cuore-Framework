@@ -1,4 +1,4 @@
-var CollapsablePanel = new Class({
+var CollapsablePanel = new Cuore.Class({
     Extends: Component,
 
     initialize: function (service, procedure) {

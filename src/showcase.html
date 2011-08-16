@@ -1,235 +1,49 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
-    
     <head>
-        <title>
-            Core javascript framework showcase
-        </title>
+        <title>Core javascript framework showcase</title>
         <link href="showcase.css" rel="stylesheet" type="text/css">
-        <script src="../lib/mootools.js" type="text/javascript">
-        </script>
-        <script src="../lib/mootools-more.js" type="text/javascript">
-        </script>
-        <!-- to be distributable, your file must be listed in lib/yui-compressor/distribute.sh
-        -->
-        <script src="../dist/Cuore-min.js" type="text/javascript">
-        </script>
-        <script type="text/javascript">
-          var ShowcasePage = new Class({
+        <!-- Cuore -->
+        <script src="../lib/mootools.js" type="text/javascript"></script>
+        <script src="../min/Cuore-min.js" type="text/javascript"></script>
 
-      Extends: Page,
+        <script src="ShowCasePage.js" type="text/javascript"></script> 
+        <script type="text/javascript"> 
+            document.addEvent("domready", function() {
+                // cache for labelService
+                currentLocale = (navigator.language || navigator.browserLanguage);
+                document.labels = {};
+                document.labels[currentLocale] = {
+                    "label.example": "Example label",
+                    "input.label": "Input Label",
+                    "button.label": "Button label",
+                    "switch.on": "ON",
+                    "switch.off": "OFF",
+                    "numeric.label": "Numeric selection",
+                    "timerange.label": "Select a time range",
+                    "lorem.ipsum": "Lorem Ipsum dolorem",
+                    "button.nested": "A button nested to component",
+                    "label.example.nested": "A label nested to component",
+                    "input.labelnested": "An input nested",
+                };
 
-      initializeServices: function() {
-          this.addService(new ButtonService());
-      },
+              /*!
+               * general debug mode on
+               * document.debugMode=true;
+               * especific debug by type
+               */
+              document.debugTypes = {
+                  "Bus": true
+              };
 
-      initializeComponents: function() {
-          this.labelShowcase();
-          this.inputShowcase();
-          this.buttonShowcase();
-          this.switchButtonShowcase();
-          this.numericSelectorShowcase();
-          this.collapsableShowcase();
-          this.collapsableDecoratedShowcase();
-          this.timeRangeShowcase();
-          this.comboShowcase();
-          this.nesteableShowcase();
-      },
-
-      labelShowcase: function() {
-          var label = new LabelPanel("label.example");
-          var noKey = new LabelPanel("key.not.solved");
-          this.addComponent(label, "labelExample", true);
-          this.addComponent(noKey, "labelExample2", true);
-      },
-
-      inputShowcase: function() {
-          var input = new Input("input.label");
-
-          var defaultValue = new Input("input.label");
-          defaultValue.setValue("example value");
-
-          var disabled = new Input("input.label");
-          disabled.setValue("example value");
-          disabled.disable()
-
-          var password = new Input("input.label", "password");
-          password.setValue("example value");
-
-          this.addComponent(input, "inputExample", true);
-          this.addComponent(defaultValue, "inputExample2", true);
-          this.addComponent(disabled, "inputExample3", true);
-          this.addComponent(password, "inputExample4", true);
-      },
-
-      buttonShowcase: function() {
-          var button = new Button();
-          var i18N = new Button("buttonName", "button.label");
-          var disabled = new Button();
-          disabled.disable();
-          var image = new Button("imageButton", "button.label");
-
-          this.addComponent(button, "buttonExample", true);
-          this.addComponent(i18N, "buttonExample2", true);
-          this.addComponent(disabled, "buttonExample3", true);
-          this.addComponent(image, "buttonExample4", true);
-      },
-
-      switchButtonShowcase: function() {
-          var button = new SwitchButton();
-          var i18N = new SwitchButton("anyName", "switch.on", "switch.off");
-          var image = new SwitchButton("imageSwitch", "switch.on", "switch.off");
-
-          this.addComponent(button, "switchButtonExample", true);
-          this.addComponent(i18N, "switchButtonExample2", true);
-          this.addComponent(image, "switchButtonExample3", true);
-      },
-
-      numericSelectorShowcase: function() {
-          var selector = new NumericSelector();
-          var negatives = new NumericSelector("numeric.label");
-          negatives.setLimInf(-10);
-          negatives.setLimSup(10);
-          negatives.setValue(3);
-          negatives.setIncrementer(3);
-          var stylable = new NumericSelector("numeric.label");
-          stylable.disable();
-          this.addComponent(selector, "numericSelectorExample", true);
-          this.addComponent(negatives, "numericSelectorExample2", true);
-          this.addComponent(stylable, "numericSelectorExample3", true);
-      },
-
-      collapsableShowcase: function() {
-          var panel = new CollapsablePanel();
-          var button = new SwitchButton("collapseButton", "collapse", "uncollapse");
-          var handler = new SwitchCollapseAndUncollapseHandler();
-          panel.addHandler("BUTTON_collapseButton_CLICKED", handler);
-
-          panel.uncollapse();
-          panel.setText("Lorem ipsum dolor sit amet,consectetur adipiscing elit. Pellentesque vulputate congue elementum. Sed iaculis dapibus justo, at hendrerit neque pharetra et. Pellentesque vehicula, urna at vehicula tempus, leo odio posuere ligula, ac posuere odio nisi quis nulla. Fusce non odio sit amet ante iaculis lobortis eget at odio. Pellentesque venenatis metus a neque tincidunt  ");
-
-          this.addComponent(panel, "collapsableExample", true);
-          this.addComponent(button, "collapsableExample2", true);
-      },
-
-      collapsableDecoratedShowcase: function() {
-          var panel = new CollapsablePanel();
-          var button = new SwitchButton("collapseDecoratedButton", "collapse", "uncollapse");
-          var handler = new SwitchCollapseAndUncollapseHandler();
-
-          panel.uncollapse();
-          panel.setText("Lorem ipsum dolor sit amet,consectetur adipiscing elit. Pellentesque vulputate congue elementum. Sed iaculis dapibus justo, at hendrerit neque pharetra et. Pellentesque vehicula, urna at vehicula tempus, leo odio posuere ligula, ac posuere odio nisi quis nulla. Fusce non odio sit amet ante iaculis lobortis eget at odio. Pellentesque venenatis metus a neque tincidunt  ");
-
-          var decoratedPanel = new CollapsableDecorator(panel);
-          decoratedPanel.addHandler("BUTTON_collapseDecoratedButton_CLICKED", handler);
-
-          this.addComponent(decoratedPanel, "collapsableDecoratedExample", true);
-          this.addComponent(button, "collapsableDecoratedExample2", true);
-      },
-
-      timeRangeShowcase: function() {
-          var control = new TimeRange("timerange.label");
-          var grain = new TimeRange("timerange.label", 30);
-          grain.setStartHour("4:00");
-          grain.setEndHour("8:30");
-          this.addComponent(control, "timeRangeExample", true);
-          this.addComponent(grain, "timeRangeExample2", true);
-      },
-
-      comboShowcase: function() {
-          var panel = new CollapsablePanel();
-          var handler = new SwitchCollapseAndUncollapseHandler();
-          panel.addHandler("BUTTON_comboCollapseButton_CLICKED", handler);
-
-          var button = new SwitchButton("comboCollapseButton", "uncollapse", "collapse");
-          var label = new LabelPanel("label.example");
-          var input = new Input("input.label");
-          var numeric = new NumericSelector("numeric.label");
-          var range = new TimeRange("timerange.label");
-
-          var printButton = new Button("print", "Print");
-          var theHandler = new PrintHandler();
-          printButton.addHandler("BUTTON_print_CLICKED", theHandler);
-
-
-          this.addComponent(button, "comboExample", true);
-          this.addComponent(panel, "comboExample", false);
-
-          var host = panel.getUniqueID();
-          this.addComponent(label, host, false);
-          this.addComponent(input, host, false);
-          this.addComponent(numeric, host, false);
-          this.addComponent(range, host, false);
-          this.addComponent(printButton, host, false);
-      },
-
-      nesteableShowcase: function() {
-          var aNestableComponent = new NestableComponent();
-          var label = new LabelPanel("label.example.nested");
-          var input = new Input("input.labelnested");
-
-
-          aNestableComponent.host(label);
-          aNestableComponent.host(input);
-
-
-          var panel = new CollapsablePanel();
-          var button = new SwitchButton("collapseButtonNested", "collapse", "uncollapse");
-          var handler = new SwitchCollapseAndUncollapseHandler();
-          panel.addHandler("BUTTON_collapseButtonNested_CLICKED", handler);
-
-          panel.uncollapse();
-          panel.setText("Lorem ipsum dolor sit amet,consectetur adipiscing elit. Pellentesque vulputate congue elementum. Sed iaculis dapibus justo, at hendrerit neque pharetra et. Pellentesque vehicula, urna at vehicula tempus, leo odio posuere ligula, ac posuere odio nisi quis nulla. Fusce non odio sit amet ante iaculis lobortis eget at odio. Pellentesque venenatis metus a neque tincidunt  ");
-
-          aNestableComponent.host(panel);
-          aNestableComponent.host(button);
-
-          anotherNestableComponent = new NestableComponent();
-          var buttonForInputApply = new Button("button.nested");
-          anotherNestableComponent.host(buttonForInputApply);
-
-          aNestableComponent.host(anotherNestableComponent);
-
-          this.addComponent(aNestableComponent, "ExampleNested", true);
-      },
-
-  });
-
-  document.addEvent("domready", function() {
-      // cache for labelService
-      currentLocale = (navigator.language || navigator.browserLanguage);
-      document.labels = {};
-      document.labels[currentLocale] = {
-          "label.example": "Example label",
-          "input.label": "Input Label",
-          "button.label": "Button label",
-          "switch.on": "ON",
-          "switch.off": "OFF",
-          "numeric.label": "Numeric selection",
-          "timerange.label": "Select a time range",
-          "lorem.ipsum": "Lorem Ipsum dolorem",
-          "button.nested": "A button nested to component",
-          "label.example.nested": "A label nested to component",
-          "input.labelnested": "An input nested",
-      };
-
-      // general debug mode on
-      //document.debugMode=true;
-      //especific debug by type
-      document.debugTypes = {
-          "Bus": true
-      };
-
-      document.page = new ShowcasePage("http://www.anydomain.com");
-      document.page.draw();
-  });
+              document.page = new ShowCasePage("http://www.anydomain.com");
+              document.page.draw();
+            });
         </script>
     </head>
     
     <body>
-        <h1>
-            Showing use and functionality of our javascript framework
-        </h1>
+        <h1>Showing use and functionality of our javascript framework</h1>
         <ul>
             <li>
                 <a href="#label">Label</a>
@@ -263,9 +77,7 @@
             </li>
         </ul>
         <div id="label" class="chapter">
-            <h2>
-                Label
-            </h2>
+            <h2>Label</h2>
             <p class="doc">
                 A label is just an I18n text on the screen
             </p>
@@ -280,9 +92,7 @@
             </div>
         </div>
         <div id="input" class="chapter">
-            <h2>
-                Input
-            </h2>
+            <h2>Input</h2>
             <p class="doc">
                 An input is a form input with a internacionalized label
             </p>
@@ -309,9 +119,7 @@
             </div>
         </div>
         <div id="button" class="chapter">
-            <h2>
-                Button
-            </h2>
+            <h2>Button</h2>
             <p class="doc">
                 A Button is a label that is clickable, emiting an event to the bus through
                 the ButtonsService in the form
@@ -342,9 +150,7 @@
             </div>
         </div>
         <div id="switchbutton" class="chapter">
-            <h2>
-                Switch button
-            </h2>
+            <h2>Switch button</h2>
             <p class="doc">
                 A switch button is a button with a state that changes at every click changing
                 the CSSClass
@@ -392,9 +198,7 @@
             </div>
         </div>
         <div id="collapsable" class="chapter">
-            <h2>
-                Collapsable panel
-            </h2>
+            <h2>Collapsable panel</h2>
             <p class="doc">
                 A Collapsable panel is a stylable panel that has a collapsable behaviour
                 ...
@@ -411,9 +215,7 @@
             </div>
         </div>
         <div id="collapsableDecorated" class="chapter">
-            <h2>
-                Decorating a collapsable panel
-            </h2>
+            <h2>Decorating a collapsable panel</h2>
             <p class="doc">
                 A Collapsable panel can be decorated to introduce animation in its collapsable
                 behaviour ...
@@ -426,9 +228,7 @@
             </div>
         </div>
         <div id="timerange" class="chapter">
-            <h2>
-                Time Range
-            </h2>
+            <h2>Time Range</h2>
             <p class="doc">
                 A TimeRange is a control that allows selection of a range of time...
             </p>
@@ -443,9 +243,7 @@
             </div>
         </div>
         <div id="combo" class="chapter">
-            <h2>
-                Showcase!!
-            </h2>
+            <h2>Showcase!!</h2>
             <p class="doc">
                 All together and collaborating... a collapsable panel with collapsing
                 button has some controls inside even a Printbutton
@@ -455,9 +253,7 @@
             </div>
         </div>
         <div id="nestableComponent" class="chapter">
-            <h2>
-                nestable component
-            </h2>
+            <h2>nestable component</h2>
             <p class="doc">
                 test for two nested levels of components
             </p>
@@ -467,5 +263,4 @@
         </div>
         </div>
     </body>
-
 </html>

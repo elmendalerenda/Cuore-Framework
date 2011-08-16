@@ -1,4 +1,4 @@
-var Renderer = new Class({
+var Renderer = new Cuore.Class({
 
     initialize: function () {
         this.panel = null;

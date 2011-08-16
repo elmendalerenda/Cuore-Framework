@@ -1,4 +1,4 @@
-var NumericSelectorRenderer = new Class({
+var NumericSelectorRenderer = new Cuore.Class({
     Extends: InputRenderer,
 
     initalize: function () {

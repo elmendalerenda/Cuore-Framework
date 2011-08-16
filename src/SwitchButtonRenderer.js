@@ -1,4 +1,4 @@
-var SwitchButtonRenderer = new Class({
+var SwitchButtonRenderer = new Cuore.Class({
     Extends: ButtonRenderer,
 
     putText: function (component) {

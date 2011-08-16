@@ -1,4 +1,4 @@
-var Service = new Class({
+var Service = new Cuore.Class({
 
     initialize: function () {
         this.name = 'ABSTRACT';

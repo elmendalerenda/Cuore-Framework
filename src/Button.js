@@ -1,4 +1,4 @@
-var Button = new Class({
+var Button = new Cuore.Class({
     Extends: Component,
 
     initialize: function (buttonName, key) {
@@ -47,5 +47,4 @@ var Button = new Class({
     isEnable: function () {
         return this.enabled;
     }
-
 });

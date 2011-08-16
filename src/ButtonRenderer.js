@@ -1,4 +1,4 @@
-var ButtonRenderer = new Class({
+var ButtonRenderer = new Cuore.Class({
     Extends: Renderer,
 
     draw: function (component) {

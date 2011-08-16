@@ -1,4 +1,4 @@
-var SetTextHandler = new Class({
+var SetTextHandler = new Cuore.Class({
     Extends: Handler,
     Implements: Debuggable,
 

@@ -1,4 +1,4 @@
-var Bus = new Class({
+var Bus = new Cuore.Class({
     Implements: Debuggable,
 
     initialize: function () {

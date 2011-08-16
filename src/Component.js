@@ -1,4 +1,4 @@
-var Component = new Class({
+var Component = new Cuore.Class({
 
     initialize: function () {
         this.LABELSERVICENAME = 'LABELS';
@@ -8,7 +8,7 @@ var Component = new Class({
         this.procedure = 'nullProcedure';
         this.I18NKey = null;
         this.handlers = {};
-        this.SEPARATOR = "_";
+        this.SEPARATOR = '_';
         this.text = '';
         this.renderer = new Renderer();
     },
@@ -51,7 +51,6 @@ var Component = new Class({
 
     eventDispatch: function (eventName, params) {
         var eventsToDispatch = this.handlers[eventName];
-        console.log(eventsToDispatch);
         if (!eventsToDispatch) return;
 
         for (var i = 0, handler; handler = eventsToDispatch[i]; i++) {
@@ -113,7 +112,7 @@ var Component = new Class({
             key: this.I18NKey
         };
 
-        this.getLabelService().execute("getLabel", params, true);
+        this.getLabelService().execute('getLabel', params, true);
     },
 
     getUniqueID: function () {
@@ -138,8 +137,8 @@ var Component = new Class({
         if (!key) return;
 
         this.I18NKey = key;
-        this.addHandler("LABELS_getLabel_EXECUTED_" + key, new SetTextHandler());
-        new Bus().subscribe(this, "LABELS_getLabel_EXECUTED_" + key);
+        this.addHandler('LABELS_getLabel_EXECUTED_' + key, new SetTextHandler());
+        new Bus().subscribe(this, 'LABELS_getLabel_EXECUTED_' + key);
     },
 
     getI18NKey: function () {

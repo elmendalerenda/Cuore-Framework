@@ -1,4 +1,4 @@
-var TimeRange = new Class({
+var TimeRange = new Cuore.Class({
     Extends: Component,
 
     initialize: function (key, granularity) {

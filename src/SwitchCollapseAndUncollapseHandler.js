@@ -1,4 +1,4 @@
-var SwitchCollapseAndUncollapseHandler = new Class({
+var SwitchCollapseAndUncollapseHandler = new Cuore.Class({
     Extends: Handler,
 
     initialize: function () {
@@ -6,9 +6,8 @@ var SwitchCollapseAndUncollapseHandler = new Class({
     },
 
     handle: function () {
-        if (this.owner.isCollapsed()) {
-            return this.owner.uncollapse();
-        }
-        this.owner.collapse();
+        var owner = this.owner;
+        var isCollapsed = owner.isCollapsed();
+        return (isCollapsed) ? owner.uncollapse() : owner.collapse();
     }
 });

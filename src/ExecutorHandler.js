@@ -1,4 +1,4 @@
-var ExecutorHandler = new Class({
+var ExecutorHandler = new Cuore.Class({
     Extends: Handler,
 
     initialize: function (ownerFunction) {

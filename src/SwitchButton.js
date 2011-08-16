@@ -1,4 +1,4 @@
-var SwitchButton = new Class({
+var SwitchButton = new Cuore.Class({
     Extends: Button,
 
     initialize: function (buttonName, activeKey, inactiveKey) {

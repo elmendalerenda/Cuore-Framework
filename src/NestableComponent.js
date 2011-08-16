@@ -1,4 +1,4 @@
-var NestableComponent = new Class({
+var NestableComponent = new Cuore.Class({
     Extends: Component,
     hostedComponents: [],
 
@@ -19,7 +19,6 @@ var NestableComponent = new Class({
     },
 
     eventDispatch: function (eventName, params) {
-        console.log('Before Super: ' + this.handlers);
         this.parent(eventName, params);
         for (var i = 0, aComponent; aComponent = this.hostedComponents[i]; i++) {
             aComponent.eventDispatch(eventName, params);

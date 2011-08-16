@@ -1,4 +1,4 @@
-var PrintHandler = new Class({
+var PrintHandler = new Cuore.Class({
     Extends: Handler,
 
     initalize: function () {

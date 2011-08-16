@@ -1,4 +1,4 @@
-var TimeRangeRenderer = new Class({
+var TimeRangeRenderer = new Cuore.Class({
     Extends: Renderer,
 
     initalize: function () {

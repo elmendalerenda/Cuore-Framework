@@ -1,4 +1,4 @@
-var NumericSelector = new Class({
+var NumericSelector = new Cuore.Class({
     Extends: Input,
     include: Debuggable,
 

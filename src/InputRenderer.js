@@ -1,4 +1,4 @@
-var InputRenderer = new Class({
+var InputRenderer = new Cuore.Class({
     Extends: Renderer,
 
     draw: function (component) {

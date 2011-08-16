@@ -1,4 +1,4 @@
-var Page = new Class({
+var Page = new Cuore.Class({
 
     initialize: function (baseURL) {
         this.services = {};
@@ -47,6 +47,7 @@ var Page = new Class({
 
     draw: function () {
         for (var component in this.components) {
+            if(!(this.components).hasOwnProperty(component)) continue;
             var currentComponent = this.getComponent(component);
 
             if (this.cleaners.indexOf(currentComponent.getName()) >= 0) {
@@ -55,7 +56,7 @@ var Page = new Class({
             currentComponent.draw();
         }
     },
-    // @TODO
+
     $: function (name) {
         return document.getElementById(name);
     },

@@ -1,4 +1,4 @@
-var Debuggable = new Class({
+var Debuggable = new Cuore.Class({
 
     debug: function (object) {
         var debugModeON = (document.debugMode == true);

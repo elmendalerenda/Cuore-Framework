@@ -1,4 +1,4 @@
-var CollapsableRenderer = new Class({
+var CollapsableRenderer = new Cuore.Class({
     Extends: Renderer,
 
     draw: function (component) {

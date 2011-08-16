@@ -1,4 +1,4 @@
-var Journey = new Class({
+var Journey = new Cuore.Class({
 
     initialize: function (start, end) {
         var allValues = (start && end);

@@ -1,4 +1,4 @@
-var Handler = new Class({
+var Handler = new Cuore.Class({
 
     initialize: function () {
         this.owner = null;

@@ -1,4 +1,4 @@
-var LabelPanel = new Class({
+var LabelPanel = new Cuore.Class({
     Extends: Component,
 
     initialize: function (key) {

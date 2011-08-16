@@ -1,4 +1,4 @@
-var Input = new Class({
+var Input = new Cuore.Class({
     Extends: Component,
 
     initialize: function (key, type) {

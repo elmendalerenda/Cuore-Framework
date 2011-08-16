@@ -1,4 +1,4 @@
-var ButtonService = new Class({
+var ButtonService = new Cuore.Class({
     Extends: Service,
 
     initalize: function () {

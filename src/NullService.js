@@ -1,4 +1,4 @@
-var NullService = new Class({
+var NullService = new Cuore.Class({
     Extends: Service,
     Implements: Debuggable,
 

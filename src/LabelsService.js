@@ -1,4 +1,4 @@
-var LabelsService = new Class({
+var LabelsService = new Cuore.Class({
     Extends: Service,
 
     initialize: function () {
