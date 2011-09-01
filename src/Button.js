@@ -1,7 +1,8 @@
-var Button = new Class({
-	Extends: Component,
+var Button = new Cuore.Class({
+    Extends: Component,
 
     initialize: function (buttonName, key) {
+
       this.parent();
       this.typeName = 'Button';
       this.service = 'BUTTON';
@@ -47,5 +48,4 @@ var Button = new Class({
     isEnable: function () {
         return this.enabled;
     }
-
 });

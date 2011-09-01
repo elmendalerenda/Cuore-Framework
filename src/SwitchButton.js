@@ -1,11 +1,11 @@
-var SwitchButton = new Class({
-	Extends: Button,
+var SwitchButton = new Cuore.Class({
+    Extends: Button,
 
     initialize: function (buttonName, activeKey, inactiveKey) {
         this.parent(buttonName);
-	    this.typeName = "SwitchButton";
-	    this.active = true;
-		this.activeLabel = this.text;
+        this.typeName = "SwitchButton";
+        this.active = true;
+        this.activeLabel = this.text;
         this.inactiveLabel = this.text;
         this.activeKey = activeKey;
         this.inactiveKey = inactiveKey;
@@ -26,8 +26,8 @@ var SwitchButton = new Class({
     },
 
     click: function (executeParent) {
-	    var isNotDefined = (executeParent === undefined);
-        if (executeParent  || isNotDefined) {
+        var isNotDefined = (executeParent === undefined);
+        if (executeParent || isNotDefined) {
             this.parent();
         }
 

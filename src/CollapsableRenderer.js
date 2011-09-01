@@ -1,7 +1,7 @@
-var CollapsableRenderer = new Class({
-   Extends: Renderer,
-    
-   draw: function (component) {
+var CollapsableRenderer = new Cuore.Class({
+    Extends: Renderer,
+
+    draw: function (component) {
         this.panel = new Element('div', {
             'id': this.innerDivName(component.getName())
         }).inject(this.container);
@@ -23,9 +23,9 @@ var CollapsableRenderer = new Class({
     },
 
     collapseBehaviour: function (component) {
-	    var COLLAPSED = "collapsed",
-	        UNCOLLAPSED = "uncollapsed";
-	
+        var COLLAPSED = "collapsed",
+            UNCOLLAPSED = "uncollapsed";
+
         this.removeClass(COLLAPSED);
         this.removeClass(UNCOLLAPSED);
 

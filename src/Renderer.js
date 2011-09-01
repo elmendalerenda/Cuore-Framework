@@ -1,4 +1,4 @@
-var Renderer = new Class({
+var Renderer = new Cuore.Class({
 
     initialize: function () {
 	    this.panel = null;
@@ -15,7 +15,7 @@ var Renderer = new Class({
     },
 
     innerDivName: function (componentName) {
-	    var divNameSuffix =  "_inner"
+        var divNameSuffix = "_inner"
         return componentName + divNameSuffix;
     },
 
@@ -49,16 +49,16 @@ var Renderer = new Class({
     },
 
     erase: function () {
-	    var erase =  this.panel;
-        if (erase) { 
+        var erase = this.panel;
+        if (erase) {
             $(erase).destroy(); // @TODO
         }
     },
 
     setCurrentClasses: function () {
-	    for(var i = 0, oneClass; oneClass = this.panelClasses[i]; i++) {
-		    this.panel.addClass(oneClass);
-	    }
+        for (var i = 0, oneClass; oneClass = this.panelClasses[i]; i++) {
+            this.panel.addClass(oneClass);
+        }
     },
 
     addClass: function (aClass) {

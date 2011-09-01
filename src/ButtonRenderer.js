@@ -33,13 +33,13 @@ var ButtonRenderer = new Class({
     },
 
     setClassCSS: function (component) {
-	    var CSSDISABLED = 'disabled';
-	  
-	    if (!component.isEnable()) {
-		    this.addClass(CSSDISABLED);
-	    } else {
-		    this.removeClass(CSSDISABLED);
-	    } 
+        var CSSDISABLED = 'disabled';
+
+        if (!component.isEnable()) {
+            this.addClass(CSSDISABLED);
+        } else {
+            this.removeClass(CSSDISABLED);
+        }
     },
 
     stopDefaultEvent:function (){

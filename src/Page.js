@@ -1,17 +1,17 @@
-var Page = new Class({
-	
+var Page = new Cuore.Class({
+
     initialize: function (baseURL) {
-	    this.services = {};
-	    this.components = {};
-	    this.cleaners = [];
+        this.services = {};
+        this.components = {};
+        this.cleaners = [];
         document.page = this;
         this.baseURL = baseURL || '';
         this.addService(new LabelsService());
         this.setUp();
     },
 
-	initializeServices: function () {},
-	initializeComponents: function () {},
+    initializeServices: function () {},
+    initializeComponents: function () {},
 
     setUp: function () {
         this.initializeServices();
@@ -40,7 +40,7 @@ var Page = new Class({
 
     subcribeComponentEvents: function (component) {
         var events = component.getManagedEvents();
-        for(var i = 0, eventName; eventName = events[i]; i++) {
+        for (var i = 0, eventName; eventName = events[i]; i++) {
             (new Bus()).subscribe(component, eventName);
         }
     },
@@ -55,9 +55,9 @@ var Page = new Class({
 	        currentComponent.draw();
 	    }
     },
-    // @TODO
-    $: function(name) {
-	      return document.getElementById(name);
+
+    $: function (name) {
+        return document.getElementById(name);
     },
 
     getComponent: function (name) {
@@ -66,16 +66,16 @@ var Page = new Class({
 
     getBaseURL: function () {
         return this.baseURL;
-    }, 
+    },
 
-	generateUUID: function() {
-	    var S4Pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'; 
-	    var S4 = S4Pattern.replace(/[xy]/g, function(group) {
-		    var randomNumber = Math.random() * 16|0, 
-		        value = group === 'x' ? randomNumber : (randomNumber&0x3|0x8);
-		
-		    return value.toString(16);
-	    });
-	    return S4; 
-	}
+    generateUUID: function () {
+        var S4Pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+        var S4 = S4Pattern.replace(/[xy]/g, function (group) {
+            var randomNumber = Math.random() * 16 | 0,
+                value = group === 'x' ? randomNumber : (randomNumber & 0x3 | 0x8);
+
+            return value.toString(16);
+        });
+        return S4;
+    }
 });

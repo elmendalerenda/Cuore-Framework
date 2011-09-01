@@ -1,17 +1,17 @@
-var LabelsService = new Class({
-	Extends: Service, 
+var LabelsService = new Cuore.Class({
+    Extends: Service,
 
     initialize: function () {
-	    this.parent();
-	    this.name = 'LABELS'; 
-	    this.typeName = 'LabelsService';
-        this.cache = document.labels || {};                             
+        this.parent();
+        this.name = 'LABELS';
+        this.typeName = 'LabelsService';
+        this.cache = document.labels || {};
         this.setLocale(navigator.language || navigator.browserLanguage);
     },
 
     setLocale: function (aLocale) {
         if (!aLocale) return;
-        
+
         this.locale = aLocale;
         this.cache[this.locale] = this.cache[this.locale] || {};
     },
@@ -39,22 +39,22 @@ var LabelsService = new Class({
     },
 
     emit: function (eventName, params) {
-	    var theKey = this.extractKey(eventName);  
-        if (!theKey) return;  
-        params = params || {}; 
-        
+        var theKey = this.extractKey(eventName);
+        if (!theKey) return;
+        params = params || {};
+
         this.cache[this.locale][theKey] = params.answer;
-        
+
         if (!this.cache[this.locale][theKey]) {
             params.answer = theKey;
         }
         this.parent(eventName, params);
     },
-     
-    extractKey: function(eventName) {
-	    var match = eventName.match(/_([a-zA-Z\.]*)$/),
-	        theKey = match ? match[1] : null;
-        
+
+    extractKey: function (eventName) {
+        var match = eventName.match(/_([a-zA-Z\.]*)$/),
+            theKey = match ? match[1] : null;
+
         return theKey;
     }
 });

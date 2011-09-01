@@ -1,7 +1,7 @@
-var NumericSelectorRenderer = new Class({
-	Extends: InputRenderer,
+var NumericSelectorRenderer = new Cuore.Class({
+    Extends: InputRenderer,
 
-    initalize: function() {
+    initalize: function () {
         this.valueDisplayed = null;
     },
 

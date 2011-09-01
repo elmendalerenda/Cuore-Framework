@@ -1,12 +1,12 @@
-var Service = new Class({
+var Service = new Cuore.Class({
 
-	initialize: function () {
-	    this.name = 'ABSTRACT';
-	    this.typeName = 'Service';
-	    this.executionPrefix = 'EXECUTED';  
-	    this.SEPARATOR = '_';
-	    this.lastDataSent = null;
-		this.baseURL = '';     
+    initialize: function () {
+        this.name = 'ABSTRACT';
+        this.typeName = 'Service';
+        this.executionPrefix = 'EXECUTED';
+        this.SEPARATOR = '_';
+        this.lastDataSent = null;
+        this.baseURL = '';
     },
 
     execute: function (procedure, params, asynchronous) {

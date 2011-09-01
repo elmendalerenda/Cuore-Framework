@@ -1,13 +1,13 @@
-var NumericSelector = new Class({
-	Extends: Input,
+var NumericSelector = new Cuore.Class({
+    Extends: Input,
     include: Debuggable,
-   
+
     initialize: function (key) {
         this.parent(key);
-	    this.typeName = "NumericSelector";
-	    this.limSup = 999999999999999999999999;
-	    this.limInf = 0;
-	    this.incrementer = 1;
+        this.typeName = "NumericSelector";
+        this.limSup = 999999999999999999999999;
+        this.limInf = 0;
+        this.incrementer = 1;
         this.setRenderer(new NumericSelectorRenderer());
     },
 

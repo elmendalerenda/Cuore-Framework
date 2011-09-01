@@ -1,9 +1,9 @@
-var SetTextHandler = new Class({
-	Extends: Handler,
+var SetTextHandler = new Cuore.Class({
+    Extends: Handler,
     Implements: Debuggable,
 
-    initalize: function() {
-	    this.typeName = "SetTextHandler";
+    initalize: function () {
+        this.typeName = "SetTextHandler";
     },
 
     handle: function (params) {

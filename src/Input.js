@@ -1,15 +1,15 @@
-var Input = new Class({
-	Extends: Component,
-   
+var Input = new Cuore.Class({
+    Extends: Component,
+
     initialize: function (key, type) {
         this.parent();
         this.setRenderer(new InputRenderer());
         this.setI18NKey(key);
-        
-	    this.typeName = "Input";
+
+        this.typeName = "Input";
         this.type = type || 'text';
-	    this.value = '';
-	    this.disabled = false;
+        this.value = '';
+        this.disabled = false;
     },
 
     getValue: function () {

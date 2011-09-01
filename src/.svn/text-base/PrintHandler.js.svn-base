@@ -1,9 +1,0 @@
-var PrintHandler = new Class({
-	Extends: Handler,
-  typeName:"PrintHandler",  
-	
-	handle: function()
-	{
-		window.print();
-	}
-});

@@ -1,11 +1,11 @@
-var Handler = new Class({
+var Handler = new Cuore.Class({
 
-    initialize: function() {
-	    this.owner = null;
-	    this.typeName = 'Handler';
+    initialize: function () {
+        this.owner = null;
+        this.typeName = 'Handler';
     },
 
-    handle: function (params) {}, 
+    handle: function (params) {},
 
     dispatch: function (params) {
         this.handle(params);
