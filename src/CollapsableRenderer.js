@@ -1,21 +1,6 @@
 var CollapsableRenderer = new Cuore.Class({
     Extends: Renderer,
 
-    draw: function (component) {
-        this.panel = new Element('div', {
-            'id': this.innerDivName(component.getName())
-        }).inject(this.container);
-        this.updateWhenDrawn(component);
-        /*
-        this.panel.setStyles({
-            'height': '0px',
-            'overflow': 'hidden',
-            'padding-top': '0px',
-            'padding-bottom': '0px'
-        });
-*/
-    },
-
     updateWhenDrawn: function (component) {
         this.parent(component);
         this.collapseBehaviour(component);
@@ -30,7 +15,7 @@ var CollapsableRenderer = new Cuore.Class({
         this.removeClass(UNCOLLAPSED);
 
         if (component.isCollapsed()) {
-            this.panel.setStyles({
+             this.panel.setStyles({
             'height': '0px',
             'overflow': 'hidden',
             'padding-top': '0px',

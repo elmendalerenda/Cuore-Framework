@@ -1,4 +1,4 @@
-var Renderer = new Cuore.Class({
+var Renderer = new Class({
 
     initialize: function () {
 	    this.panel = null;
@@ -45,7 +45,9 @@ var Renderer = new Cuore.Class({
     },
 
     updateWhenDrawn: function (component) {
-        this.panel.set('text', component.getText());
+	if(component.getText() != ''){
+	    this.panel.set('text', component.getText());
+	}
     },
 
     erase: function () {

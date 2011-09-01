@@ -157,7 +157,6 @@
 
       comboShowcase: function() {
           var panel = new CollapsablePanel();
-          panel.uncollapse();
           var handler = new SwitchCollapseAndUncollapseHandler();
           panel.addHandler("BUTTON_comboCollapseButton_CLICKED", handler);
 
@@ -180,9 +179,6 @@
           
           this.addComponent(button, "comboExample", true);
           this.addComponent(panel, "comboExample", false);
-
-         
-          
          
       },
 

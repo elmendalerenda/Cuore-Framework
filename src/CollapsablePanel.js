@@ -8,11 +8,7 @@ var CollapsablePanel = new Class({
         this.renderer = new CollapsableRenderer();
         this.addClass("collapsablePanel");
     },
-/*
-    draw: function () {
-        this.render();
-    },
-*/
+
     isCollapsed: function () {
         return this.collapsed;
     },

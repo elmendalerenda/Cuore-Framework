@@ -73,6 +73,21 @@ describe("NestableComponent", function () {
         var firstChildId = aComponentDOMElement.getChildren()[0].get('id');
         expect(firstChildId).toEqual(anyComponent.getUniqueID());
     });
+    
+    it("should not replace hosted components with its text, when updating drawn component", function () {
+        var anyComponent = new Component();
+        var aComponent = new NestableComponent();
+        var container = createTestContainer();
+        aComponent.setContainer(container.get('id'));
+        aComponent.host(anyComponent);
+
+        aComponent.draw();
+        aComponent.draw();
+
+        var aComponentDOMElement = $(aComponent.getUniqueID());
+        var firstChildId = aComponentDOMElement.getChildren()[0].get('id');
+        expect(firstChildId).toEqual(anyComponent.getUniqueID());
+    });
 
 
     it("assigns different identifiers to nested components", function () {
