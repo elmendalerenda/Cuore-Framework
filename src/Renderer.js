@@ -3,11 +3,11 @@ var Renderer = new Class({
     initialize: function () {
 	    this.panel = null;
 	    this.panelClasses = ["innerComponentDiv"];
-        this.container = document.body;
+      this.container = document.body;
     },
 
     setContainer: function (aContainer) {
-        this.container = aContainer;
+        this.container = $(aContainer);
     },
 
     getContainer: function () {

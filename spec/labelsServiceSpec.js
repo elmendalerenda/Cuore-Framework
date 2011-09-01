@@ -31,9 +31,9 @@ describe("LabelsService", function () {
             "LABEL_KEY": testKey,
             "LOCALE": browserLocale
         };
-        var baseURL = "http://baseurl/";
+        var baseURL = "http://baseurl";
         var urlRequested = "";
-        var expectedURL = baseURL + "labels/get";
+        var expectedURL = baseURL + "/labels/get";
         labelService.setBaseURL(baseURL);
         labelService.request = function (url, params, eventName) {
             urlRequested = url;

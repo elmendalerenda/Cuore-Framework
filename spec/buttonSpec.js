@@ -78,44 +78,71 @@ describe("Button", function () {
         expect(DOMButton.hasClass(aDOMClass)).toBeTruthy();
     });
 
-    it("has a click event that when it is fired calls button's service", function () {
+    it("has CSS class 'button'", function () {
+        var container = createTestContainer();
+        var buttonClass="button";
+        var aButton = new Button("buttonName", "CanonicalKey");
+        aButton.setContainer(container.get("id"));
+        aButton.draw();
+
+
+        var DOMButton = $(aButton.getUniqueID());
+        expect(DOMButton.hasClass(buttonClass)).toBeTruthy();
+    });
+    
+    it("has a click event that when it is fired calls click", function () {
         var container = createTestContainer();
 
         var buttonName = "buttonName";
         var aButton = new Button(buttonName, "CanonicalKey");
         aButton.setContainer(container.get("id"));
-
+        spyOn(aButton,'click');
+        
         aButton.draw();
 
         var DOMButton = $(aButton.getUniqueID());
         var events = new Hash(DOMButton.retrieve('events')).getKeys();
-
+        
+        
         expect(events.contains("click")).toBeTruthy();
-
-        var dataToService = "testParams";
-        var dataToServiceReceived = null;
-
-        var serviceOnClick = {};
-        serviceOnClick.executeCalled = false;
-
-        serviceOnClick.execute = function (procedure, params) {
-            serviceOnClick.executeCalled = true;
-            dataToServiceReceived = params;
-        };
-
-        aButton.setData(dataToService);
-
-        aButton.getService = function () {
-            return serviceOnClick;
-        };
-
+        
         DOMButton.fireEvent("click");
-
-        expect(serviceOnClick.executeCalled).toBeTruthy();
-        expect(dataToServiceReceived).toEqual(dataToService);
+        
+        expect(aButton.click).toHaveBeenCalled();
+        
     });
 
-    xit("allows disabling and enabling behaviour", function () {
+    it("click calls button service", function () {
+        var buttonName = "buttonName";
+        var aButton = new Button(buttonName, "CanonicalKey");
+        var someData="Some Data";
+        var myMockedService={};
+        myMockedService.execute=function(){};
+        spyOn(myMockedService,'execute');
+        aButton.setData(someData);
+        aButton.getService=function()
+        {
+          return myMockedService;
+        }
+        aButton.click();  
+        expect(myMockedService.execute).toHaveBeenCalledWith(buttonName,someData);
+    });
+    
+    it("default event is stop even when disabled", function () {
+        var container = createTestContainer();
+
+        var buttonName = "buttonName";
+        var aButton = new Button(buttonName, "CanonicalKey");
+        aButton.setContainer(container.get("id"));
+        aButton.disable();
+        spyOn(aButton.renderer, 'stopDefaultEvent');
+        aButton.draw();
+
+        expect(aButton.renderer.stopDefaultEvent).toHaveBeenCalled();
+    });
+    
+    
+    it("allows disabling and enabling behaviour", function () {
         var buttonName = "buttonName";
         var undrawnButton = new Button(buttonName, "CanonicalKey");
 

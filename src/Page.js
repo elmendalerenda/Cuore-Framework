@@ -49,8 +49,8 @@ var Page = new Class({
 	    for(var component in this.components) {
 		    var currentComponent = this.getComponent(component);
 		
-		    if (this.cleaners.indexOf(currentComponent.getName()) >= 0) {
-                this.$(currentComponent.getContainer()).innerHTML = '';
+		   if (this.cleaners.indexOf(currentComponent.getName()) >= 0) {
+                $(currentComponent.getContainer()).innerHTML = '';
 	        }
 	        currentComponent.draw();
 	    }

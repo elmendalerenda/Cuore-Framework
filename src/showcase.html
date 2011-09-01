@@ -12,8 +12,44 @@
         </script>
         <!-- to be distributable, your file must be listed in lib/yui-compressor/distribute.sh
         -->
-        <script src="../dist/Cuore-min.js" type="text/javascript">
-        </script>
+        
+        
+        <!-- Cuore -->
+	<script src="./Debuggable.js" type="text/javascript"></script>
+	<script src="./Bus.js" type="text/javascript"></script>
+	<script src="./Service.js" type="text/javascript"></script>
+	<script src="./Page.js" type="text/javascript"></script> 
+	<script src="./Handler.js" type="text/javascript"></script>
+	<script src="./NullService.js" type="text/javascript"></script>
+	<script src="./LabelsService.js" type="text/javascript"></script>
+	<script src="./ButtonService.js" type="text/javascript"></script>
+	<script src="./Renderer.js" type="text/javascript"></script>
+	<script src="./ExecutorHandler.js" type="text/javascript"></script>
+	<script src="./PrintHandler.js" type="text/javascript"></script>
+	<script src="./SetTextHandler.js" type="text/javascript"></script> 
+	<script src="./Journey.js" type="text/javascript"></script>
+	<script src="./Component.js" type="text/javascript"></script>
+  <script src="./NestableComponent.js" type="text/javascript"></script>
+	<script src="./Input.js" type="text/javascript"></script>
+  <script src="./InputRenderer.js" type="text/javascript"></script>
+  <script src="./Button.js" type="text/javascript"></script> 
+  <script src="./ButtonRenderer.js" type="text/javascript"></script>
+  <script src="./TimeRange.js" type="text/javascript"></script>
+  <script src="./TimeRangeRenderer.js" type="text/javascript"></script>
+  <script src="./SwitchButton.js" type="text/javascript"></script>
+  <script src="./SwitchButtonRenderer.js" type="text/javascript"></script>
+  <script src="./NumericSelector.js" type="text/javascript"></script>
+  <script src="./NumericSelectorRenderer.js" type="text/javascript"></script>
+  <script src="./SwitchCollapseAndUncollapseHandler.js" type="text/javascript"></script>
+  <script src="./CollapsablePanel.js" type="text/javascript"></script>
+	<script src="./CollapsableRenderer.js" type="text/javascript"></script>
+	<script src="./LabelPanel.js" type="text/javascript"></script>
+	<script src="./NumericSelectorRenderer.js" type="text/javascript"></script>
+	
+
+        
+        
+        
         <script type="text/javascript">
           var ShowcasePage = new Class({
 
@@ -30,7 +66,6 @@
           this.switchButtonShowcase();
           this.numericSelectorShowcase();
           this.collapsableShowcase();
-          this.collapsableDecoratedShowcase();
           this.timeRangeShowcase();
           this.comboShowcase();
           this.nesteableShowcase();
@@ -112,20 +147,6 @@
           this.addComponent(button, "collapsableExample2", true);
       },
 
-      collapsableDecoratedShowcase: function() {
-          var panel = new CollapsablePanel();
-          var button = new SwitchButton("collapseDecoratedButton", "collapse", "uncollapse");
-          var handler = new SwitchCollapseAndUncollapseHandler();
-
-          panel.uncollapse();
-          panel.setText("Lorem ipsum dolor sit amet,consectetur adipiscing elit. Pellentesque vulputate congue elementum. Sed iaculis dapibus justo, at hendrerit neque pharetra et. Pellentesque vehicula, urna at vehicula tempus, leo odio posuere ligula, ac posuere odio nisi quis nulla. Fusce non odio sit amet ante iaculis lobortis eget at odio. Pellentesque venenatis metus a neque tincidunt  ");
-
-          var decoratedPanel = new CollapsableDecorator(panel);
-          decoratedPanel.addHandler("BUTTON_collapseDecoratedButton_CLICKED", handler);
-
-          this.addComponent(decoratedPanel, "collapsableDecoratedExample", true);
-          this.addComponent(button, "collapsableDecoratedExample2", true);
-      },
 
       timeRangeShowcase: function() {
           var control = new TimeRange("timerange.label");
@@ -138,6 +159,7 @@
 
       comboShowcase: function() {
           var panel = new CollapsablePanel();
+          panel.uncollapse();
           var handler = new SwitchCollapseAndUncollapseHandler();
           panel.addHandler("BUTTON_comboCollapseButton_CLICKED", handler);
 
@@ -151,20 +173,24 @@
           var theHandler = new PrintHandler();
           printButton.addHandler("BUTTON_print_CLICKED", theHandler);
 
-
+          panel.host(label);
+          panel.host(input);
+          panel.host(numeric);
+          panel.host(range);
+          panel.host(printButton);
+          
+          
           this.addComponent(button, "comboExample", true);
           this.addComponent(panel, "comboExample", false);
 
-          var host = panel.getUniqueID();
-          this.addComponent(label, host, false);
-          this.addComponent(input, host, false);
-          this.addComponent(numeric, host, false);
-          this.addComponent(range, host, false);
-          this.addComponent(printButton, host, false);
+         
+          
+         
       },
 
       nesteableShowcase: function() {
           var aNestableComponent = new NestableComponent();
+          
           var label = new LabelPanel("label.example.nested");
           var input = new Input("input.labelnested");
 
@@ -185,7 +211,7 @@
           aNestableComponent.host(button);
 
           anotherNestableComponent = new NestableComponent();
-          var buttonForInputApply = new Button("button.nested");
+          var buttonForInputApply = new Button("nestedButton","button.nested");
           anotherNestableComponent.host(buttonForInputApply);
 
           aNestableComponent.host(anotherNestableComponent);
@@ -410,21 +436,7 @@
                 This MUST disappear
             </div>
         </div>
-        <div id="collapsableDecorated" class="chapter">
-            <h2>
-                Decorating a collapsable panel
-            </h2>
-            <p class="doc">
-                A Collapsable panel can be decorated to introduce animation in its collapsable
-                behaviour ...
-            </p>
-            <div id="collapsableDecoratedExample">
-                This MUST disappear
-            </div>
-            <div id="collapsableDecoratedExample2">
-                This MUST disappear
-            </div>
-        </div>
+        
         <div id="timerange" class="chapter">
             <h2>
                 Time Range

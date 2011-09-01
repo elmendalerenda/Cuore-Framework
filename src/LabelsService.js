@@ -29,7 +29,7 @@ var LabelsService = new Class({
                 "LOCALE": this.locale
             };
 
-            var url = this.getBaseURL() + "labels/get";
+            var url = this.getBaseURL() + "/labels/get";
             this.request(url, dataToSend, eventNameWithKey);
         }
     },

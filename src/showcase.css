@@ -244,33 +244,9 @@ label{
 	text-transform: uppercase;
 }
 
-#comboExample_CollapsablePanel_1_inner .innerComponentDiv
+#ExampleNested .inputJS,
+#ExampleNested .labelPanel
 {
-	display:block;
-	padding: 10px;
+  display:block;
 }
 
-#comboExample_CollapsablePanel_1_inner_NumericSelector_1_inner a.off
-{
-	background-color:#8e8e8e;
-}
-
-#comboExample_CollapsablePanel_1_inner_NumericSelector_1_inner a
-{
-	color:  white;
-	font-weight:bolder;
-	background-color:#ef652e;
-	text-decoration: none;
-	margin: 3px;
-	font-size: 1.3em;
-}
-a#comboExample_CollapsablePanel_1_inner_Button_1_inner.button
-{
-	margin: 10px;
-	padding: 0px;
-	display:inline;
-}
-#ExampleNested_Component_1_aComponent_1_inner
-{
-    display: block;
-}

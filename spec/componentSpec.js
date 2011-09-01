@@ -316,7 +316,27 @@ describe("Component", function () {
         expect($(componentId).get("html")).toEqual(dummyText);
     });
 
+    it("setting a text doesn't draw", function () {
+        var container = createTestContainer();
+        var aComponent = new Component();
+        aComponent.setContainer(container.get('id'));
+        var testText = "testText";
+        aComponent.setText(testText);
+        
+        var componentId = aComponent.getUniqueID();
 
+        expect($(componentId)).toBeNull();
+        
+    });
+    
+    it("has a method that retrieves its container", function () {
+        var container = createTestContainer();
+        var aComponent = new Component();
+        expect(aComponent.getContainer()).toEqual(document.body);
+        aComponent.setContainer(container.get('id'));
+        expect(aComponent.getContainer()).toEqual(container);
+    });
+    
     it("fetch and execute a service from page and execute the procedure when it is executed", function () {
 
         var procedureName = "aProcedure";

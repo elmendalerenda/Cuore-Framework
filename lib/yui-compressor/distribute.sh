@@ -16,6 +16,7 @@ cat ../../src/PrintHandler.js >> Cuore-one.js
 cat ../../src/SetTextHandler.js >> Cuore-one.js 
 cat ../../src/Journey.js >> Cuore-one.js
 cat ../../src/Component.js >> Cuore-one.js
+cat ../../src/NestableComponent.js >> Cuore-one.js
 cat ../../src/Input.js >> Cuore-one.js
 cat ../../src/InputRenderer.js >> Cuore-one.js
 cat ../../src/Button.js >> Cuore-one.js 
@@ -31,7 +32,7 @@ cat ../../src/CollapsablePanel.js >> Cuore-one.js
 cat ../../src/CollapsableRenderer.js >> Cuore-one.js
 cat ../../src/LabelPanel.js >> Cuore-one.js
 cat ../../src/NumericSelectorRenderer.js >> Cuore-one.js
-cat ../../src/NestableComponent.js >> Cuore-one.js
+
 
 
 java -jar yuicompressor-2.4.6.jar --type js Cuore-one.js -o ../../min/Cuore-min.js

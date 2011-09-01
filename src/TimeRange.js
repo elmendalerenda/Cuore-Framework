@@ -16,15 +16,19 @@ var TimeRange = new Class({
     },
 
     setStartHour: function (hour) {
-        var anHour = hour || this.renderer.getStartTime();
+        var anHour = hour 
+        if (hour.target) anHour = this.renderer.getStartTime();
+        
         this.journey.setStartTime(anHour);
         this.updateRender();
         this.emitValues();
     },
 
     setEndHour: function (hour) {
-        var anHour = hour || this.renderer.getEndTime();
+         var anHour = hour 
+        if (hour.target) anHour = this.renderer.getEndTime();
         this.journey.setEndTime(anHour);
+        
         this.updateRender();
         this.emitValues();
     },

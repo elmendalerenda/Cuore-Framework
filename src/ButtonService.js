@@ -1,7 +1,8 @@
 var ButtonService = new Class({
 	Extends: Service,
 
-    initalize: function() {
+    initialize: function() {
+      this.parent();
 	    this.name = 'BUTTON';
 	    this.typeName = 'ButtonService';
 	    this.executionPrefix = 'CLICKED';	

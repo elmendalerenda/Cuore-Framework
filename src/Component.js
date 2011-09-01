@@ -8,7 +8,7 @@ var Component = new Class({
 	    this.procedure = 'nullProcedure';
 	    this.I18NKey = null;
 	    this.handlers = {};
-		this.SEPARATOR = "_";
+	    this.SEPARATOR = "_";
 	    this.text = '';
         this.renderer = new Renderer();
     },
@@ -97,6 +97,10 @@ var Component = new Class({
         this.renderer.setContainer(container);
     },
 
+    getContainer: function () {
+        return this.renderer.getContainer();
+    },
+    
     getService: function (aService) {
         var theService = aService || this.service;
         return document.page.getService(theService) || null;
@@ -131,7 +135,7 @@ var Component = new Class({
 
     setText: function (text) {
         this.text = text;
-        this.render();
+        this.updateRender();
     },
 
     setI18NKey: function (key) {
