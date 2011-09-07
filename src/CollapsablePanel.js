@@ -1,5 +1,5 @@
-var CollapsablePanel = new Cuore.Class({
-    Extends: Component,
+var CollapsablePanel = new Class({
+	Extends: NestableComponent,
 
     initialize: function (service, procedure) {
         this.parent(service, procedure);
@@ -7,10 +7,6 @@ var CollapsablePanel = new Cuore.Class({
         this.collapsed = true;
         this.renderer = new CollapsableRenderer();
         this.addClass("collapsablePanel");
-    },
-
-    draw: function () {
-        this.render();
     },
 
     isCollapsed: function () {

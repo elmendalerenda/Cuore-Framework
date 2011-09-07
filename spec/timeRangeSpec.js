@@ -113,17 +113,21 @@ describe("TimeRange", function () {
 
         var startSelect = DOMObject.getFirst("select.startHourSelect");
         var endSelect = DOMObject.getFirst("select.endHourSelect");
-
+        var mockedEvent={};
+        mockedEvent.target=function(){};
+        
         var expectedValue = "09:00";
         startSelect.set("value", expectedValue);
-        startSelect.fireEvent("change");
+        startSelect.fireEvent("change",mockedEvent);
         expect(theComponent.getStartHour()).toEqual("09:00");
         var expectedValue = "12:00";
         endSelect.set("value", expectedValue);
-        endSelect.fireEvent("change");
+        endSelect.fireEvent("change",mockedEvent);
         expect(theComponent.getEndHour()).toEqual(expectedValue);
     });
 
+    
+    
     it("should call service on change", function () {
         var theComponent = getTimeRange();
 

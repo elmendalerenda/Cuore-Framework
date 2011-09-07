@@ -1,13 +1,13 @@
-var Renderer = new Cuore.Class({
+var Renderer = new Class({
 
     initialize: function () {
-        this.panel = null;
-        this.panelClasses = ["innerComponentDiv"];
-        this.container = document.body;
+	    this.panel = null;
+	    this.panelClasses = ["innerComponentDiv"];
+      this.container = document.body;
     },
 
     setContainer: function (aContainer) {
-        this.container = aContainer;
+        this.container = $(aContainer);
     },
 
     getContainer: function () {
@@ -45,7 +45,9 @@ var Renderer = new Cuore.Class({
     },
 
     updateWhenDrawn: function (component) {
-        this.panel.set('text', component.getText());
+	if(component.getText() != ''){
+	    this.panel.set('text', component.getText());
+	}
     },
 
     erase: function () {

@@ -1,10 +1,11 @@
 var ButtonService = new Cuore.Class({
     Extends: Service,
 
-    initalize: function () {
-        this.name = 'BUTTON';
-        this.typeName = 'ButtonService';
-        this.executionPrefix = 'CLICKED';
+    initialize: function() {
+      this.parent();
+	    this.name = 'BUTTON';
+	    this.typeName = 'ButtonService';
+	    this.executionPrefix = 'CLICKED';	
     },
 
     execute: function (procedure, params) {

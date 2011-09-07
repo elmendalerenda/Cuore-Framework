@@ -96,6 +96,10 @@ var Component = new Cuore.Class({
         this.renderer.setContainer(container);
     },
 
+    getContainer: function () {
+        return this.renderer.getContainer();
+    },
+    
     getService: function (aService) {
         var theService = aService || this.service;
         return document.page.getService(theService) || null;
@@ -130,7 +134,7 @@ var Component = new Cuore.Class({
 
     setText: function (text) {
         this.text = text;
-        this.render();
+        this.updateRender();
     },
 
     setI18NKey: function (key) {

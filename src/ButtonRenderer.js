@@ -1,19 +1,26 @@
-var ButtonRenderer = new Cuore.Class({
-    Extends: Renderer,
-
+var ButtonRenderer = new Class({
+	Extends: Renderer,
+	
+	
+	  initialize: function () {
+	    	this.parent();
+	    	this.DOMClass = "button";
+    },
+    
     draw: function (component) {
         this.panel = new Element("a", {
             id: this.innerDivName(component.getName()),
             href: "#"
         }).inject(this.container);
-
-        this.panel.addClass(component.getButtonName());
-
         this.span = new Element("span").inject(this.panel);
+        
+        this.panel.addClass(component.getButtonName());
+        this.panel.addClass(this.DOMClass);
+        this.updateWhenDrawn(component);
+        
     },
 
     updateWhenDrawn: function (component) {
-        console.log('test');
         this.putText(component);
         this.setClassCSS(component);
         this.addEvents(component);
@@ -35,14 +42,17 @@ var ButtonRenderer = new Cuore.Class({
         }
     },
 
-    addEvents: function (component) {
-        this.panel.removeEvents('click');
-
-        if (component.isEnable()) {
-            this.panel.addEvent("click", function (e) {
+    stopDefaultEvent:function (){
+      this.panel.addEvent("click", function (e) {
                 if (e) e.stop();
             });
-            this.panel.addEvent("click", component.click.bind(component));
+    },
+    
+    addEvents: function (component) {
+        this.panel.removeEvents('click');
+        this.stopDefaultEvent();
+        if (component.isEnable()) {
+            this.panel.addEvent("click",component.click.bind(component));
         }
     },
 });

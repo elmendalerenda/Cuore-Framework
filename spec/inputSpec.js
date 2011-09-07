@@ -97,6 +97,15 @@ describe("Input", function () {
         expect(value).toEqual("testText");
     });
 
+    it("must update its text when drawn", function () {
+        var aComponent = getComponentInput();
+        aComponent.draw();
+        aComponent.setText("testText");
+        DOMObject = $(aComponent.getUniqueID());
+        var value = DOMObject.get("text");
+        expect(value).toEqual("testText");
+    });
+    
     function getComponentInput() {
         $("xhtmlToTest").erase("html");
         var aComponent = new Input("CanonicalKey");

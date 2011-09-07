@@ -46,15 +46,14 @@ var Page = new Cuore.Class({
     },
 
     draw: function () {
-        for (var component in this.components) {
-            if(!(this.components).hasOwnProperty(component)) continue;
-            var currentComponent = this.getComponent(component);
-
-            if (this.cleaners.indexOf(currentComponent.getName()) >= 0) {
-                this.$(currentComponent.getContainer()).innerHTML = '';
-            }
-            currentComponent.draw();
-        }
+	    for(var component in this.components) {
+		    var currentComponent = this.getComponent(component);
+		
+		   if (this.cleaners.indexOf(currentComponent.getName()) >= 0) {
+                $(currentComponent.getContainer()).innerHTML = '';
+	        }
+	        currentComponent.draw();
+	    }
     },
 
     $: function (name) {

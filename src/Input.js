@@ -12,10 +12,6 @@ var Input = new Cuore.Class({
         this.disabled = false;
     },
 
-    setText: function (aText) {
-        this.text = aText;
-    },
-
     getValue: function () {
         return this.renderer.getValue() || this.value;
     },
