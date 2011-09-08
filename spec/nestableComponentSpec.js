@@ -39,7 +39,6 @@ describe("NestableComponent", function () {
         spyOn(anyComponent, "eventDispatch");
 
         var aComponent = new NestableComponent();
-        //console.log(aComponent);
 
         aComponent.host(anyComponent);
         aComponent.eventDispatch("anEvent", undefined);
@@ -73,6 +72,19 @@ describe("NestableComponent", function () {
         var firstChildId = aComponentDOMElement.getChildren()[0].get('id');
         expect(firstChildId).toEqual(anyComponent.getUniqueID());
     });
+    
+    it("updates nested components inside parent component", function () {
+        var anyComponent = new Component();
+        spyOn(anyComponent,'updateRender');
+        var aComponent = new NestableComponent();
+        
+        aComponent.host(anyComponent);
+
+        aComponent.updateRender();
+
+        expect(anyComponent.updateRender).toHaveBeenCalled();
+    });
+    
     
     it("should not replace hosted components with its text, when updating drawn component", function () {
         var anyComponent = new Component();

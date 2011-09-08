@@ -179,7 +179,7 @@ describe("Component", function () {
     it("has I18NKey label getter & setter", function () {
         var aI18Nkey = "CanonicalKey";
         var aComponent = new Component();
-
+        spyOn(aComponent,'getLabel');
         aComponent.setI18NKey(aI18Nkey);
         expect(aComponent.getI18NKey(aI18Nkey)).toEqual(aI18Nkey);
     });
@@ -214,6 +214,15 @@ describe("Component", function () {
 
         expect(receivedParams).toEqual(expectedParams);
         expect(calledService).toEqual(aComponent.LABELSERVICENAME);
+    });
+
+    it("requests their label when setI18NKey is called", function () {
+        var aComponent = new Component();
+        spyOn(aComponent,'getLabel');
+        
+        aComponent.setI18NKey("CanonicalKey");
+        
+        expect(aComponent.getLabel).toHaveBeenCalled();
     });
 
     it("has a Handler for its label when i18nkey setted", function () {

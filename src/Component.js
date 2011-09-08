@@ -143,6 +143,7 @@ var Component = new Cuore.Class({
         this.I18NKey = key;
         this.addHandler('LABELS_getLabel_EXECUTED_' + key, new SetTextHandler());
         new Bus().subscribe(this, 'LABELS_getLabel_EXECUTED_' + key);
+        this.getLabel();
     },
 
     getI18NKey: function () {

@@ -28,14 +28,18 @@ var NestableComponent = new Cuore.Class({
     draw: function () {
         this.parent();
         for (var i = 0, aComponent; aComponent = this.hostedComponents[i]; i++) {
-            aComponent.setContainer(this.$(this.renderer.innerDivName(this.name)));
+            aComponent.setContainer($(this.renderer.innerDivName(this.name)));
             aComponent.draw();
         }
     },
 
-    $: function (element) {
-        return document.getElementById(element);
+    updateRender: function () {
+        this.parent();
+        for (var i = 0, aComponent; aComponent = this.hostedComponents[i]; i++) {
+            aComponent.updateRender();
+        }
     },
+    
 
     destroy: function () {
         for (var i = 0, aComponent; aComponent = this.hostedComponents[i]; i++) {
