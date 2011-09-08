@@ -23,8 +23,8 @@ cat ../../src/Button.js >> Cuore-one.js
 cat ../../src/ButtonRenderer.js >> Cuore-one.js
 cat ../../src/TimeRange.js >> Cuore-one.js
 cat ../../src/TimeRangeRenderer.js >> Cuore-one.js
-cat ../../src/switchButton.js >> Cuore-one.js
-cat ../../src/switchButtonRenderer.js >> Cuore-one.js
+cat ../../src/SwitchButton.js >> Cuore-one.js
+cat ../../src/SwitchButtonRenderer.js >> Cuore-one.js
 cat ../../src/NumericSelector.js >> Cuore-one.js
 cat ../../src/NumericSelectorRenderer.js >> Cuore-one.js
 cat ../../src/SwitchCollapseAndUncollapseHandler.js >> Cuore-one.js
