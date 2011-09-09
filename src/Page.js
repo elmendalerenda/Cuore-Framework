@@ -7,6 +7,7 @@ var Page = new Cuore.Class({
         document.page = this;
         this.baseURL = baseURL || '';
         this.addService(new LabelsService());
+	this.addService(new ButtonService());
         this.setUp();
     },
 

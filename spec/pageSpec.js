@@ -57,6 +57,14 @@ describe("Page", function () {
 
     });
 
+    it("creates a button service at initialization", function () {
+        var aPage = new Page();
+        var serviceName = "BUTTON";
+        var aService = aPage.getService(serviceName);
+        expect(aService instanceof ButtonService).toBeTruthy();
+
+    });
+    
     it("allows baseUrl initialization", function () {
         var aPage = new Page();
         expect(aPage.getBaseURL()).toEqual("");
