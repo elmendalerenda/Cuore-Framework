@@ -25,7 +25,7 @@ describe("SwitchCollapseAndUncollapseHandler", function () {
         };
 
         var aSwitchCollapseHandler = new SwitchCollapseAndUncollapseHandler();
-        aComponent.addDispatcher("testEvent", aSwitchCollapseHandler);
+        aComponent.addHandler("testEvent", aSwitchCollapseHandler);
 
         aSwitchCollapseHandler.handle();
         expect(aComponent.isCollapsed()).toBeFalsy();

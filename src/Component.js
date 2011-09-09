@@ -64,9 +64,6 @@ var Component = new Cuore.Class({
         this.handlers[eventName].push(handler);
     },
 
-    addDispatcher: function (eventName, handler) {
-        this.addHandler(eventName, handler);
-    },
 
     addClass: function (aClass) {
         this.renderer.addClass(aClass);
