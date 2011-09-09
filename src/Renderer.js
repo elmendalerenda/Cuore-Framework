@@ -51,9 +51,8 @@ var Renderer = new Class({
     },
 
     erase: function () {
-        var erase = this.panel;
-        if (erase) {
-            $(erase).destroy(); // @TODO
+        if (this.isDrawn()) {
+            this.panel.destroy();
         }
     },
 
