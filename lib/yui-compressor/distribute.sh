@@ -1,7 +1,7 @@
 #!/bin/sh
 	
 #set the same order of showcase.html
-
+cat ../../src/Message.js >> Cuore-one.js
 cat ../../src/Debuggable.js >> Cuore-one.js
 cat ../../src/Bus.js >> Cuore-one.js
 cat ../../src/Service.js >> Cuore-one.js

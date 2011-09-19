@@ -14,26 +14,24 @@ describe("setTextHandler", function () {
         var aButton = {};
         var settedText = null;
 
-        aButton.setText = function (text) {
-            settedText = text;
-        };
+        aButton.setText = function (text) {};
+        spyOn(aButton,"setText");
 
         aSetTextHandler.setOwner(aButton);
 
-        var correctJson = {
-            'answer': testText
-        };
-        var incorrectJson = {
-            'something': testText
-        };
+        var theMessage= new Message();
+        theMessage.putOnAnswer("text",testText);
+        
+        var correctMessage = theMessage;
+       
+        var incorrectMessage = new Message();
 
-        aSetTextHandler.handle(correctJson);
+        aSetTextHandler.handle(correctMessage);
+        expect(aButton.setText).toHaveBeenCalledWith(testText);
 
-        expect(settedText).toEqual(testText);
+        aButton.setText.reset();
+        aSetTextHandler.handle(incorrectMessage);
 
-        settedText = null;
-        aSetTextHandler.handle(incorrectJson);
-
-        expect(settedText).toBeUndefined();
+        expect(aButton.setText).not.toHaveBeenCalled();
     }); 
 });

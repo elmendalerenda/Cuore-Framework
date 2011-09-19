@@ -6,14 +6,15 @@ var SetTextHandler = new Cuore.Class({
         this.typeName = "SetTextHandler";
     },
 
-    handle: function (params) {
-        this.debug("SetTextHandler.handle(params)");
-        this.debug(params);
+    handle: function (response) {
+        this.debug("SetTextHandler.handle(response)");
+        this.debug(response);
         this.debug(this.getOwner());
         this.debug("----------------------------");
 
-        if (params) {
-            var text = params.answer;
+        var theMessage = response;
+        var text = theMessage.getFromAnswer("text");
+        if (text != ""){
             this.getOwner().setText(text);
         }
     }

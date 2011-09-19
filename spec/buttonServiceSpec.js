@@ -6,7 +6,8 @@ describe("ButtonService", function () {
         expect(aButtonService instanceof ButtonService).toBeTruthy();
     });
 
-    it("emits to bus with correct eventname and buttonname property is added to params when it is executed", function () {
+  
+    it("emits to bus with correct eventname and buttonname property is added to message Query when it is executed", function () {
 
         var testingProcedure = "testingProcedure";
         var thePrefix = "CLICKED";
@@ -33,8 +34,14 @@ describe("ButtonService", function () {
         aButtonService.execute(testingProcedure, testParams);
 
         expect(eventNameEmitted).toEqual(eventNameExpected);
-        expect(paramEmitted.key).toEqual("value");
-        expect(paramEmitted.buttonName).toEqual(testingProcedure);
+	
+        
+	expect(paramEmitted.getFromQuery("key")).toEqual("value");
+        expect(paramEmitted.getFromQuery("buttonName")).toEqual(testingProcedure);
     });
+
+
+
+
 
 });

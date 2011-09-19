@@ -12,29 +12,36 @@ var Service = new Cuore.Class({
     execute: function (procedure, params, asynchronous) {
         var eventName = this.getEventNameForExecution(procedure);
         this[procedure](params, eventName);
+       
+        var theMessage = new Message();
+        theMessage.putMapOnQuery(params);
+        this.lastDataSent = theMessage;
 
-        if (!asynchronous) {
-            this.emit(eventName, params);
+        if (!asynchronous) {            
+            this.emit(eventName, theMessage.asJson());
         }
     },
 
     request: function (url, params, eventName) {
+        var theMessage=new Message();
+        theMessage.putMapOnQuery(params);
+        this.lastDataSent = theMessage;
+        
         new Request.JSON({
             url: url,
             data: {
-                "query": JSON.encode(params)
+                "query": theMessage.asJson()
             },
             onComplete: function (response) {
                 this.emit(eventName, response);
-
             }.bind(this)
-        }).send();
-
-        this.lastDataSent = params;
+        }).send();        
     },
 
-    emit: function (eventName, params) {
-        this.getBus().emit(eventName, params);
+    emit: function (eventName, response) {
+        var theMessage= new Message(response);
+        this.lastDataSent = theMessage;
+        this.getBus().emit(eventName, theMessage);
     },
 
     getEventNameForExecution: function (procedure) {

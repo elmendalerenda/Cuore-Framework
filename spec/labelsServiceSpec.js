@@ -21,87 +21,86 @@ describe("LabelsService", function () {
 
     it("calls request with correct eventName and params and baseURL when getLabel executed", function () {
         var labelService = new LabelsService();
-        var browserLocale = (navigator.language || navigator.browserLanguage);
-        var paramRequested = null;
-        var eventNameRequested = null;
+	var browserLocale = (navigator.language || navigator.browserLanguage);
+        
+
         var testEvent = "test_Event";
         var testKey = "testKey";
+
         var eventNameExpected = testEvent + labelService.SEPARATOR + testKey;
-        var paramExpected = {
-            "LABEL_KEY": testKey,
-            "LOCALE": browserLocale
+        
+	var paramsSent = {
+	    "key":   testKey,
+	    "locale":browserLocale
         };
-        var baseURL = "http://baseurl";
-        var urlRequested = "";
-        var expectedURL = baseURL + "/labels/get";
+        
+	var baseURL = "http://baseurl";
+        
+	var expectedURL = baseURL + "/labels/get";
         labelService.setBaseURL(baseURL);
-        labelService.request = function (url, params, eventName) {
-            urlRequested = url;
-            paramRequested = params;
-            eventNameRequested = eventName;
-        };
+        
+	
+	spyOn(labelService,"request");
+	
+	
 
-        labelService.getLabel({
-            "key": testKey
-        }, testEvent);
+        labelService.getLabel(paramsSent,testEvent);
 
-        expect(eventNameRequested).toEqual(eventNameExpected);
-        expect(paramRequested).toEqual(paramExpected);
-        expect(urlRequested).toEqual(expectedURL);
+        expect(labelService.request).toHaveBeenCalledWith(expectedURL,paramsSent,eventNameExpected);
     });
 
+    
+ 
     it("uses an internal cache to save request calls", function () {
-        var testEvent = "testEvent";
+	document.labels=undefined;
+	var baseURL = "http://baseurl";        
+	var labelService = new LabelsService();	
+        labelService.setBaseURL(baseURL);
+
+	
+	var browserLocale = (navigator.language || navigator.browserLanguage);        
         var testKey = "testKey";
-        var testParams = {
-            "key": testKey
+	var testParams = {
+            "key": testKey,
+	    "locale":browserLocale
         };
-        var expectedEmittedEvent = testEvent + "_" + testKey;
-        var testLabel = "testLabel";
-        var browserLocale = (navigator.language || navigator.browserLanguage);
+	
+	var testEvent = "test_Event";
+        var eventNameExpected = testEvent + labelService.SEPARATOR + testKey;
 
-        var labelService = new LabelsService();
+	var expectedLabel = "testLabel";	
+	var messageExpected = new Message();
+	messageExpected.putOnQuery("key",testKey);
+	messageExpected.putOnQuery("locale",browserLocale);
+	messageExpected.putOnAnswer("text",expectedLabel);
+					   
+	var aBus = {};
+        aBus.emit = function (event, params) {};
+        spyOn(labelService,"getBus").andReturn(aBus);
+	spyOn(aBus,"emit");
+	
+	var mocketRequest = function(url, params, eventName){
+	    this.emit(eventName,messageExpected.asJson());
 
-        var emittedEvent = null;
-        var emittedParams = null;
-        var aBus = {};
-        aBus.emit = function (eventName, params) {
-            emittedEvent = eventName;
-            emittedParams = params;
-        };
-
-        var requestCalled = false;
-        labelService.getBus = function () {
-            return aBus;
-        };
-
-        labelService.request = function (url, params, eventName) {
-            requestCalled = true;
-            var params = {
-                "answer": testLabel
-            };
-            this.emit(eventName, params);
-        };
-
-        labelService.getLabel(testParams, testEvent);
-
-        expect(requestCalled).toBeTruthy();
-        expect(emittedEvent).toEqual(expectedEmittedEvent);
-
-        var cacheExpected = {};
+	    };
+	spyOn(labelService,"request").andCallFake(mocketRequest);
+        
+	var cacheExpected = {};
         cacheExpected[browserLocale] = {
             "testKey": "testLabel"
         };
-
-        expect(labelService.cache).toEqual(cacheExpected);
-
-        requestCalled = false;
-        emittedEvent = null;
-        emittedParams = null;
         labelService.getLabel(testParams, testEvent);
-
-        expect(requestCalled).toBeFalsy();
-        expect(emittedEvent).toEqual(expectedEmittedEvent);
+    
+	expect(aBus.emit.mostRecentCall.args[0]).toEqual(eventNameExpected);
+	expect(labelService.request.mostRecentCall.args[2]).toEqual(eventNameExpected);
+        expect(labelService.cache).toEqual(cacheExpected);
+	    
+	labelService.request.reset();
+        labelService.getLabel(testParams, testEvent);
+	expect(labelService.request.mostRecentCall).toEqual({});
+	expect(aBus.emit.mostRecentCall.args[0]).toEqual(eventNameExpected);
+	
+	document.labels=undefined;
     });
 
     it("reads document.labels as internal cache when initialized", function () {
@@ -125,60 +124,73 @@ describe("LabelsService", function () {
     });
 
     it("can use (.) symbol in the name of the keys", function () {
-        var testKey = "test.Key";
-        var testLabel = "testLabel";
-        var testParams = {
-            "key": testKey
+	document.labels=undefined;
+	var baseURL = "http://baseurl";        
+	var labelService = new LabelsService();	
+        labelService.setBaseURL(baseURL);
+
+	
+	var browserLocale = (navigator.language || navigator.browserLanguage);        
+        var testKey = "testKey.test";
+	var testParams = {
+            "key": testKey,
+	    "locale":browserLocale
         };
+	
+	var testEvent = "test_Event";
+        var eventNameExpected = testEvent + labelService.SEPARATOR + testKey;
 
-        var labelService = new LabelsService();
-
-        var aBus = {};
+	var expectedLabel = "testLabel";	
+	var messageExpected = new Message();
+	messageExpected.putOnQuery("key",testKey);
+	messageExpected.putOnQuery("locale",browserLocale);
+	messageExpected.putOnAnswer("text",expectedLabel);
+					   
+	var aBus = {};
         aBus.emit = function (event, params) {};
+        spyOn(labelService,"getBus").andReturn(aBus);
+	spyOn(aBus,"emit");
+	
+	var mocketRequest = function(url, params, eventName){
+	    this.emit(eventName,messageExpected.asJson());
 
-        labelService.getBus = function () {
-            return aBus;
-        };
-
-        labelService.request = function (url, params, eventName) {
-
-            var params = {
-                "answer": testLabel
-            };
-            this.emit(eventName, params);
-        };
-
-        labelService.getLabel(testParams, "testEvent");
-
-        var browserLocale = (navigator.language || navigator.browserLanguage);
-
-        cacheExpected = {};
+	    };
+	spyOn(labelService,"request").andCallFake(mocketRequest);
+        
+	var cacheExpected = {};
         cacheExpected[browserLocale] = {
-            "test.Key": "testLabel"
+            "testKey": "testLabel"
         };
-        expect(labelService.cache).toEqual(cacheExpected);
-        document.labels = undefined;
+        labelService.getLabel(testParams, testEvent);
+    
+	expect(aBus.emit.mostRecentCall.args[1]).toEqual(messageExpected);
+	document.labels=undefined;
     });
 
     it("getLabel method calls with 404 requests returns key without caching", function () {
         aBus = {};
         aBus.answer = undefined;
-        aBus.emit = function (event, params) {
-            this.answer = params.answer;
+        aBus.emit = function (event, message) {
+            this.answer = message.getFromAnswer("text");
         };
 
         var labelService = new LabelsService();
         labelService.getBus = function () {
             return aBus;
         };
+	var testKey = "UnexistentKey";
+	var testEvent = "test_Event";
+        var eventNameExpected = testEvent + labelService.SEPARATOR + testKey;
 
-        labelService.emit("testEvent_UnexistentKey", undefined);
-        expect(aBus.answer).toEqual("UnexistentKey");
+        labelService.emit(eventNameExpected, undefined);
+        expect(aBus.answer).toEqual(testKey);
+	
         var expectedCache = {};
         var browserLocale = (navigator.language || navigator.browserLanguage);
         expectedCache[browserLocale] = {};
         expect(labelService.cache).toEqual(expectedCache);
     });
+
 
     it("has a fail safe if documentLabels has bad cache", function () {
         document.labels = {};
@@ -241,4 +253,39 @@ describe("LabelsService", function () {
         expect(labelInCache).toBeTruthy();
     });
 
+
+
+
+
+    it("emits a message which query containing key and locale and answer contains the label"), function (){
+	var baseURL = "http://baseurl";        
+	
+	var labelService = new LabelsService();	
+        labelService.setBaseURL(baseURL);
+	var browserLocale = (navigator.language || navigator.browserLanguage);        
+        var testEvent = "test_Event";
+        var testKey = "testKey";
+	var expectedLabel = "testLabel";
+	var testParams = {
+            "key": testKey,
+	    "locale" : browserLocale
+        };	
+        var eventNameExpected = testEvent + labelService.SEPARATOR + testKey;
+	var messageExpected = new Message('{"header":{},"query":{"key":"'+testKey+'","locale":"'+browserLocale+'"},"answer":{"text":"testLabel"}}');
+	
+	var aBus = {};
+        aBus.emit = function (event, params) {}
+        spyOn(labelService,"getBus").andReturn(aBus);
+
+	
+	spyOn(labelService,"request").andCallFake(function(url, params, eventName){this.emit(eventName,messageExpected.asJson())});
+
+
+
+	spyOn(aBus,"emit");
+        labelService.getLabel(testParams, testEvent);
+        expect(aBus.emit).toHaveBeenCalledWith(eventNameExpected,messageExpected);
+	
+    
+    };
 });

@@ -68,12 +68,11 @@ describe("SwitchButton", function () {
 
         var activeLabel = "active";
         var inactiveLabel = "inactive";
-        var activeMessage = {
-            "answer": activeLabel
-        };
-        var inactiveMessage = {
-            "answer": inactiveLabel
-        };
+        var activeMessage = new Message();
+	activeMessage.putOnAnswer("text",activeLabel);
+	
+        var inactiveMessage = new Message();
+	inactiveMessage.putOnAnswer("text",inactiveLabel);
 
         aButton.setActiveLabel(activeMessage);
         aButton.setInactiveLabel(inactiveMessage);

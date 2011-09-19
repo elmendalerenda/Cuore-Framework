@@ -55,12 +55,12 @@ var SwitchButton = new Cuore.Class({
     },
 
     setActiveLabel: function (message) {
-        this.activeLabel = message.answer;
+        this.activeLabel = message.getFromAnswer("text");
         this.updateRender();
     },
 
     setInactiveLabel: function (message) {
-        this.inactiveLabel = message.answer;
+        this.inactiveLabel = message.getFromAnswer("text");;
         this.updateRender();
     },
 

@@ -19,36 +19,37 @@ var LabelsService = new Cuore.Class({
     getLabel: function (params, eventName) {
         var eventNameWithKey = eventName + this.SEPARATOR + params.key;
         var cachedLabel = this.fromCache(params.key);
-        if (cachedLabel) {
-            var cachedParams = [];
-            cachedParams["answer"] = cachedLabel;
-            this.emit(eventNameWithKey, cachedParams);
-        } else {
-            var dataToSend = {
-                "LABEL_KEY": params.key,
-                "LOCALE": this.locale
+        if (cachedLabel)
+            {
+                var cachedResponse = new Message();
+                cachedResponse.putMapOnQuery(params);       
+                cachedResponse.putOnAnswer("text",cachedLabel);
+                this.emit(eventNameWithKey, cachedResponse.asJson());   
+            }
+        else
+            {
+             if (!params["locale"]) params.locale = this.locale;
+             var url = this.getBaseURL() + "/labels/get";
+             this.request(url, params, eventNameWithKey)  
             };
-
-            var url = this.getBaseURL() + "/labels/get";
-            this.request(url, dataToSend, eventNameWithKey);
-        }
     },
 
     fromCache: function (key) {
         return this.cache[this.locale][key];
     },
 
-    emit: function (eventName, params) {
+    emit: function (eventName, response) {
         var theKey = this.extractKey(eventName);
         if (!theKey) return;
-        params = params || {};
-
-        this.cache[this.locale][theKey] = params.answer;
-
-        if (!this.cache[this.locale][theKey]) {
-            params.answer = theKey;
+        var theMessage = new Message(response);        
+        if (theMessage.getFromAnswer("text")!="")
+        {
+            this.cache[this.locale][theKey]= theMessage.getFromAnswer("text");
         }
-        this.parent(eventName, params);
+        if (!this.cache[this.locale][theKey]) {
+            theMessage.putOnAnswer("text",theKey);
+        }
+        this.parent(eventName,theMessage.asJson());
     },
 
     extractKey: function (eventName) {

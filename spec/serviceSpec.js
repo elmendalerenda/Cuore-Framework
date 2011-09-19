@@ -3,21 +3,21 @@ describe("Service", function () {
     it("calls procedure and bus emits the event when service is executed", function () {
         var aService = new Service();
         aService = addTestProcedure(aService);
-        var bus = createDummyBus();
+	var bus = createDummyBus();
         aService.getBus = function () {
             return bus;
         };
 
         var procedureName = "testProcedure";
-        var params = {
-            "testParam1": true,
-            "testParam2": true
+        spyOn(aService,"testProcedure");
+	var params = {
+            "testParam1": "true",
+            "testParam2": "true"
         };
 
         aService.execute(procedureName, params);
 
-        expect(aService.testProcedureExecuted).toBeTruthy();
-        expect(aService.testProcedureParams).toEqual(params);
+        expect(aService.testProcedure.mostRecentCall.args[0]).toEqual(params);
         expect(aService.getBus().broadcastEvent).toEqual(aService.getEventNameForExecution(procedureName));
     });
 
@@ -30,15 +30,15 @@ describe("Service", function () {
         };
 
         var procedureName = "testProcedure";
-        var params = {
+        spyOn(aService,"testProcedure");
+	var params = {
             "testParam1": true,
             "testParam2": true
         };
 
         aService.execute(procedureName, params, false);
-
-        expect(aService.testProcedureExecuted).toBeTruthy();
-        expect(aService.testProcedureParams).toEqual(params);
+	
+        expect(aService.testProcedure.mostRecentCall.args[0]).toEqual(params);
         expect(aService.getBus().broadcastEvent).toEqual(aService.getEventNameForExecution(procedureName));
     });
 
@@ -51,6 +51,7 @@ describe("Service", function () {
         };
 
         var procedureName = "testProcedure";
+	spyOn(aService,"testProcedure");
         var params = {
             "testParam1": true,
             "testParam2": true
@@ -58,8 +59,7 @@ describe("Service", function () {
 
         aService.execute(procedureName, params, true);
 
-        expect(aService.testProcedureExecuted).toBeTruthy();
-        expect(aService.testProcedureParams).toEqual(params);
+        expect(aService.testProcedure.mostRecentCall.args[0]).toEqual(params);
         expect(aService.getBus().broadcastEvent).toBeUndefined();
     });
 
@@ -72,19 +72,41 @@ describe("Service", function () {
         expect(aService.getBaseURL()).toEqual(aBaseURL);
     });
 
-    it("stores the last data sent when a request is done", function () {
+
+    it("stores the last data sent when executed ", function () {
         var aService = new Service();
+        var asyncService = new Service();
+	expect(aService.getLastDataSent()).toBeNull();
+	expect(asyncService.getLastDataSent()).toBeNull();
 
-        expect(aService.getLastDataSent()).toBeNull();
-
-        var params = {
-            "param1": "lol"
+        aService = addTestProcedure(aService);
+	asyncService = addTestProcedure(asyncService);
+	
+        var bus = createDummyBus();
+        
+	aService.getBus = function () {
+            return bus;
+        };
+	asyncService.getBus = function () {
+            return bus;
         };
 
-        aService.request("http://localhost", params);
+        var procedureName = "testProcedure";
+	spyOn(aService,"testProcedure");
+        spyOn(asyncService,"testProcedure");
+        
+	var params = {
+            "aKey": "aValue"
+        };
+        aService.execute(procedureName, params, false);
+	
+	expect(aService.getLastDataSent().getFromQuery("aKey")).toEqual("aValue");
 
-        expect(aService.getLastDataSent()).toEqual(params);
-    });
+        asyncService.execute(procedureName, params, true);
+	expect(asyncService.getLastDataSent().getFromQuery("aKey")).toEqual("aValue");
+
+    
+        });
 
     it("executes a procedure asynchronously and bus emits the event when request completes", function () {
         var aService = new Service();
@@ -108,6 +130,49 @@ describe("Service", function () {
         aService.execute(procedureName, {}, true);
     });
 
+
+    it("emits a message ", function () {
+        var aService = new Service();
+        var procedureName = "testProcedure";
+
+        aService.testProcedure = function (params, eventName) {
+            this.request("http://localhost", params, eventName);
+        };
+
+	var mockedBus={};
+	mockedBus.emit=function(eventName,response){};
+	
+	spyOn(mockedBus,"emit");
+        spyOn(aService,"getBus").andReturn(mockedBus); 
+        aService.execute(procedureName, {}, false);
+	
+	expect(mockedBus.emit.mostRecentCall.args[1] instanceof Message).toBeTruthy();
+    });
+    
+    
+    it("emits a message with response encoded as a message", function () {
+        var aService = new Service();
+
+	var mockedBus={};
+	mockedBus.emit=function(eventName,response){};
+        var expectedMessage = new Message('{"header":{},"query":{},"answer":{"anAnswerKey":"anAnswerValue"}}');
+
+	var response = expectedMessage.asJson();
+
+	
+	spyOn(mockedBus,"emit");
+        spyOn(aService,"getBus").andReturn(mockedBus); 
+        
+	aService.emit("eventname", response);
+	
+	var theMessage=mockedBus.emit.mostRecentCall.args[1];
+    
+        expect(theMessage.asJson()).toEqual(expectedMessage.asJson());
+    });
+    
+  
+    
+    
     it("builds a unique name for every event sent", function () {
         var aService = new Service();
 
@@ -123,10 +188,7 @@ describe("Service", function () {
 	    aService.testProcedureParams = null;
 	    
 	    aService.testProcedure = function(procedureParams) {
-		    aService.testProcedureExecuted = true;
-		    aService.testProcedureParams   = procedureParams;
 	    };
-	
 	    return aService;
     };
  
