@@ -41,49 +41,49 @@ describe("Component", function () {
     it("adds handlers and could dispatch events to the handlers", function () {
         var aHandler = createDummyHandler();
 
-        var event = "anEvent";
+        var eventName = "anEvent";
         var params = {
             aParam: "aparam",
             anotherParam: "anotherParam"
         };
 
         var aComponent = new Component();
-        aComponent.addHandler(event, aHandler);
+        aComponent.addHandler(eventName, aHandler);
 
-        aComponent.eventDispatch(event, params);
+        aComponent.eventDispatch(eventName, params);
 
         expect(aHandler.recievedParams).toEqual(params);
         expect(aHandler.owner.getName()).toEqual(aComponent.getName());
     });
 
     it("can dispatch events even when it has no handlers", function () {
-        var event = "anEvent";
+        var eventName = "anEvent";
         var params = {
             aParam: "aParam",
             anotherParam: "anotherParam"
         };
 
         var aComponent = new Component();
-        aComponent.eventDispatch(event, params);
+        aComponent.eventDispatch(eventName, params);
         expect(true).toBeTruthy();
     });
 
 
     it("knows events managed by handlers", function () {
-        var event = "anEvent";
+        var eventName = "anEvent";
         var anotherEvent = "anotherEvent";
         var aComponent = new Component();
 
-        aComponent.addHandler(event, createDummyHandler());
-        aComponent.addHandler(event, createDummyHandler());
+        aComponent.addHandler(eventName, createDummyHandler());
+        aComponent.addHandler(eventName, createDummyHandler());
 
         var managedEvents = aComponent.getManagedEvents();
-        expect(managedEvents).toEqual([event]);
+        expect(managedEvents).toEqual([eventName]);
 
         aComponent.addHandler(anotherEvent, createDummyHandler());
 
         var managedEvents = aComponent.getManagedEvents();
-        expect(managedEvents).toEqual([event, anotherEvent]);
+        expect(managedEvents).toEqual([eventName, anotherEvent]);
     });
 
 
@@ -98,88 +98,80 @@ describe("Component", function () {
         expect(aComponent.getName()).toEqual(testingName);
     });
 
-
-    it("provides its typename", function () {
-        var aComponent = new Component();
-
-        var expectedTypeName = "Component";
-        expect(aComponent.getTypeName()).toEqual(expectedTypeName);
-
-    });
-
     it("inject element into its container", function () {
         var container = createTestContainer();
         var componentName = "componentName";
 
-        aComponent = new Component();
+        var aComponent = new Component();
         aComponent.setName(componentName);
         aComponent.setContainer(container.get('id'));
         aComponent.draw();
         var id = aComponent.getUniqueID();
-
+        var createdElement = document.getElementById(id);
+        
         expect(id).toEqual(componentName + "_inner");
-
-        expect($defined($(id))).toBeDefined();
-        expect($(id).get("tag")).toEqual("div");
-        expect($(id).get("class")).toEqual("innerComponentDiv");
-        expect($(id).getParent()).toEqual(container);
+        
+        expect(!!(createdElement)).toBeDefined();
+         
+        expect(createdElement.tagName).toEqual("DIV");
+        expect(createdElement.className).toEqual("innerComponentDiv");
+        expect(createdElement.parentNode).toBe(container);
     });
 
     it("could be removed", function () {
         var container = createTestContainer();
-        aComponent = new Component();
+        var aComponent = new Component();
         aComponent.setContainer(container.get('id'));
+        
         var id = aComponent.getUniqueID();
 
         aComponent.draw();
-
-        expect($defined($(id))).toBeTruthy();
-
+        
         aComponent.destroy();
+        var createdElement = document.getElementById(id);
 
-        expect($defined($(id))).toBeFalsy();
+        expect(!!(createdElement)).toBeFalsy();
     });
-
-
 
     it("allow adding css classes after drawing", function () {
         var container = createTestContainer();
-        aComponent = new Component();
+        var aComponent = new Component();
         aComponent.setContainer(container.get('id'));
         var componentId = aComponent.getUniqueID();
 
         aComponent.addClass("testingClass");
         aComponent.draw();
-
-        expect($(componentId).hasClass("testingClass")).toBeTruthy();
-        expect($(componentId).hasClass("innerComponentDiv")).toBeTruthy();
+        
+        var element = document.getElementById(componentId);
+        
+        expect(element.className).toBe("innerComponentDiv testingClass");
 
         aComponent.addClass("testingClass2");
-        expect($(componentId).hasClass("testingClass2")).toBeTruthy();
-        expect($(componentId).hasClass("testingClass")).toBeTruthy();
+        expect(element.className).toBe("innerComponentDiv testingClass testingClass2");
     });
 
 
     it("allow removing classes after drawing", function () {
         var container = createTestContainer();
-        aComponent = new Component();
+        var aComponent = new Component();
         aComponent.setContainer(container.get('id'));
         var componentId = aComponent.getUniqueID();
-
+        
         aComponent.addClass("testingClass");
         aComponent.draw();
-
-        expect($(componentId).hasClass("testingClass")).toBeTruthy();
-        expect($(componentId).hasClass("innerComponentDiv")).toBeTruthy();
-
+        
+        var element = document.getElementById(componentId);
+        
+        expect(element.className).toBe("innerComponentDiv testingClass");
+        
         aComponent.removeClass("testingClass");
-        expect($(componentId).hasClass("testingClass")).toBeFalsy();
+        expect(element.className).toBe("innerComponentDiv");
     });
 
     it("has I18NKey label getter & setter", function () {
         var aI18Nkey = "CanonicalKey";
         var aComponent = new Component();
-        spyOn(aComponent,'getLabel');
+
         aComponent.setI18NKey(aI18Nkey);
         expect(aComponent.getI18NKey(aI18Nkey)).toEqual(aI18Nkey);
     });
@@ -195,7 +187,8 @@ describe("Component", function () {
         var container = createTestContainer();
         var calledService = null;
 
-        aComponent = new Component();
+        var aComponent = new Component();
+        var LABELSERVICENAME = 'LABELS';
         aComponent.setContainer(container.get('id'));
 
         document.page = {};
@@ -213,19 +206,10 @@ describe("Component", function () {
         };
 
         expect(receivedParams).toEqual(expectedParams);
-        expect(calledService).toEqual(aComponent.LABELSERVICENAME);
+        expect(calledService).toEqual(LABELSERVICENAME);
     });
 
-    it("requests their label when setI18NKey is called", function () {
-        var aComponent = new Component();
-        spyOn(aComponent,'getLabel');
-        
-        aComponent.setI18NKey("CanonicalKey");
-        
-        expect(aComponent.getLabel).toHaveBeenCalled();
-    });
-
-    it("has a Handler for its label when i18nkey setted", function () {
+    xit("has a Handler for its label when i18nkey setted", function () {
         var eventName = "LABELS_getLabel_EXECUTED_CanonicalKey";
         var aComponent = new Component();
         aComponent.setI18NKey("CanonicalKey");
@@ -234,7 +218,7 @@ describe("Component", function () {
         expect(events.contains(eventName)).toBeTruthy();
     });
 
-    it("is suscribed to the bus on I18NKey set", function () {
+    xit("is suscribed to the bus on I18NKey set", function () {
         var receivedSubscriber = undefined;
         var receivedEvent = undefined;
         var bus = new Bus();
@@ -267,7 +251,7 @@ describe("Component", function () {
         var container = createTestContainer();
         var calledService = null;
 
-        aComponent = new Component();
+        var aComponent = new Component();
         aComponent.setContainer(container.get('id'));
 
         document.page = {};
@@ -280,7 +264,6 @@ describe("Component", function () {
 
         expect(receivedParams).toBeUndefined();
         expect(calledService).toBeNull();
-
     });
 
 
@@ -294,7 +277,7 @@ describe("Component", function () {
         var container = createTestContainer();
         var calledService = null;
 
-        aComponent = new Component();
+        var aComponent = new Component();
         aComponent.getLabelService = function () {
             return aService;
         };
@@ -316,13 +299,15 @@ describe("Component", function () {
         aComponent.setText(testText);
         aComponent.draw();
         var componentId = aComponent.getUniqueID();
+        var createdElement = document.getElementById(componentId);
 
         expect(aComponent.getText()).toEqual(testText);
-        expect($(componentId).get("html")).toEqual(testText);
+
+        expect(createdElement.innerHTML).toEqual(testText);
 
         var dummyText = "dummyTextIntoAPage";
         aComponent.setText(dummyText);
-        expect($(componentId).get("html")).toEqual(dummyText);
+        expect(createdElement.innerHTML).toEqual(dummyText);
     });
 
     it("setting a text doesn't draw", function () {
@@ -352,9 +337,9 @@ describe("Component", function () {
         var serviceName = "aService";
         var testingParams = "testingParams";
 
-        theService = preparePage(serviceName, procedureName);
+        var theService = preparePage(serviceName, procedureName);
 
-        aComponent = new Component();
+        var aComponent = new Component();
         aComponent.initializeExecutionContext(serviceName, procedureName);
         aComponent.execute();
 
@@ -369,7 +354,7 @@ describe("Component", function () {
     });
 
 
-    function preparePage(serviceName, procedureName) {
+    var preparePage = function(serviceName, procedureName) {
         document.page = {};
 
         var aService = prepareService();
@@ -381,9 +366,9 @@ describe("Component", function () {
         };
 
         return aService;
-    }
+    };
 
-    function prepareService() {
+    var prepareService = function() {
         var aService = {};
 
         aService.paramsExecuted = null;
@@ -400,15 +385,16 @@ describe("Component", function () {
     }
 
 
-    function createTestContainer() {
+    var createTestContainer = function() {
         $("xhtmlToTest").erase('html');
         var container = new Element('div', {
             "id": "testingContainer"
         }).inject($("xhtmlToTest"));
+        
         return container;
     }
 
-    function createDummyHandler() {
+    var createDummyHandler = function() {
         var aHandler = {};
         aHandler.handle = function (params) {
             this.recievedParams = params;

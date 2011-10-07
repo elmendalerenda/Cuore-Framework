@@ -1,6 +1,5 @@
-var Component = new Cuore.Class({
-
-    initialize: function () {
+var Component = Class.$extend({
+    __init__: function () {
         this.LABELSERVICENAME = 'LABELS';
         this.name = 'aComponent';
         this.typeName = 'Component';
@@ -138,7 +137,7 @@ var Component = new Cuore.Class({
         if (!key) return;
 
         this.I18NKey = key;
-        this.addHandler('LABELS_getLabel_EXECUTED_' + key, new SetTextHandler());
+       // this.addHandler('LABELS_getLabel_EXECUTED_' + key, new SetTextHandler());
         new Bus().subscribe(this, 'LABELS_getLabel_EXECUTED_' + key);
         this.getLabel();
     },

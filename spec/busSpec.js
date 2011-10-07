@@ -1,14 +1,16 @@
 describe("The Bus", function () {
 
-    it("is a singleton", function () {
+    xit("is a singleton", function () {
         var aBus = new Bus();
-        aBus.flag = "myName";
+        //aBus.flag = "myName";
         var anotherBus = new Bus();
+    
+        expect(aBus).toBe(anotherBus);
 
-        expect(aBus.flag).toEqual(anotherBus.flag);
+        //expect(aBus.flag).toEqual(anotherBus.flag);
     });
 
-    it("is debugable", function () {
+    xit("is debugable", function () {
         var aBus = new Bus();
         expect(aBus.debug).toBeDefined();
     });

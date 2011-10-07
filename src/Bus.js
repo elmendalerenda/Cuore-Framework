@@ -1,7 +1,6 @@
-var Bus = new Cuore.Class({
-    Implements: Debuggable,
-
-    initialize: function () {
+var Bus = Class.$extend({
+    
+     __init__: function () {
         this.instanceName = "Bus";
         this.typeName = "Bus";
         this.subscriptions = [];
@@ -48,10 +47,10 @@ var Bus = new Cuore.Class({
 
     emit: function (eventName, params) {
         var subscribers = this.subscribers(eventName);
-        this.debug("Bus.emit (event, params)");
-        this.debug(eventName);
-        this.debug(params);
-        this.debug("------------");
+       // this.debug("Bus.emit (event, params)");
+       // this.debug(eventName);
+       // this.debug(params);
+       // this.debug("------------");
 
         for (var i = 0, subscriber; subscriber = subscribers[i]; i++) {
             subscriber.eventDispatch(eventName, params);

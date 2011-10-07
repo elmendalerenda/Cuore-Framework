@@ -1,8 +1,8 @@
-var Renderer = new Class({
+var Renderer = Class.$extend({
 
-    initialize: function () {
-	    this.panel = null;
-	    this.panelClasses = ["innerComponentDiv"];
+    __init__: function () {
+		this.panel = null;
+this.panelClasses = ["innerComponentDiv"];
       this.container = document.body;
     },
 
@@ -45,9 +45,9 @@ var Renderer = new Class({
     },
 
     updateWhenDrawn: function (component) {
-	if(component.getText() != ''){
-	    this.panel.set('text', component.getText());
-	}
+if(component.getText() != ''){
+this.panel.set('text', component.getText());
+}
     },
 
     erase: function () {
@@ -80,4 +80,4 @@ var Renderer = new Class({
         return this.panelClasses;
     },
 
-});
+});	
