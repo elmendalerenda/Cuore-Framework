@@ -1,22 +1,19 @@
 describe("The Bus", function () {
 
-    xit("is a singleton", function () {
-        var aBus = new Bus();
-        //aBus.flag = "myName";
-        var anotherBus = new Bus();
+    it("is a singleton", function () {
+        var aBus = Bus.instance(); // new Bus();
+        var anotherBus = Bus.instance(); // new Bus();
     
         expect(aBus).toBe(anotherBus);
-
-        //expect(aBus.flag).toEqual(anotherBus.flag);
     });
 
     xit("is debugable", function () {
-        var aBus = new Bus();
+        var aBus = Bus.instance();
         expect(aBus.debug).toBeDefined();
     });
 
     it("could be reset", function () {
-        var aBus = new Bus();
+        var aBus = Bus.instance();
 
         expect(aBus.hasSubscriptions()).toBeFalsy();
 
@@ -29,7 +26,7 @@ describe("The Bus", function () {
     });
 
     it("has accountability of subscribers to every event", function () {
-        var aBus = new Bus();
+        var aBus = Bus.instance();
         aBus.subscribe("aSubscriber", "anEvent");
         aBus.subscribe("aSubscriber", "anotherEvent");
         aBus.subscribe("anotherSubscriber", "anEvent");
@@ -43,7 +40,7 @@ describe("The Bus", function () {
 
 
     it("registers suscribers and emits events to them", function () {
-        var aBus = new Bus();
+        var aBus = Bus.instance();
         aBus.reset();
 
         var dummySubscriber = createDummySubscriber();
@@ -79,7 +76,7 @@ describe("The Bus", function () {
 
 
     it("unregister subscribers", function () {
-        var aBus = new Bus();
+        var aBus = Bus.instance();
         aBus.reset();
 
         var dummySubscriber = createDummySubscriber();
@@ -113,7 +110,7 @@ describe("The Bus", function () {
 
 
     it("cannot have subscribed the same object twice for the same event", function () {
-        var aBus = new Bus();
+        var aBus = Bus.instance();
         aBus.reset();
 
         var event = "testEvent";

@@ -1,12 +1,19 @@
 var Bus = Class.$extend({
     
-     __init__: function () {
+    busInstance: null,
+    
+    __classvars__ : {
+        instance: function (){
+            document[this.instanceName] = document[this.instanceName] || new Bus();
+        
+            return document[this.instanceName];
+        }
+    },
+    
+    __init__: function () {
         this.instanceName = "Bus";
         this.typeName = "Bus";
         this.subscriptions = [];
-
-        document[this.instanceName] = document[this.instanceName] || this;
-        return document[this.instanceName];
     },
 
     subscribe: function (subscriber, eventName) {
