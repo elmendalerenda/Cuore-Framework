@@ -1,6 +1,6 @@
-var Service = new Cuore.Class({
+var Service = Class.$extend({
 
-    initialize: function () {
+    __init__: function () {
         this.name = 'ABSTRACT';
         this.typeName = 'Service';
         this.executionPrefix = 'EXECUTED';

@@ -162,10 +162,10 @@ describe("Component", function () {
         
         var element = document.getElementById(componentId);
         
-        expect(element.className).toBe("innerComponentDiv testingClass");
+        expect(element.className).toEqual("innerComponentDiv testingClass");
         
         aComponent.removeClass("testingClass");
-        expect(element.className).toBe("innerComponentDiv");
+        expect(element.className).toEqual("innerComponentDiv");
     });
 
     it("has I18NKey label getter & setter", function () {

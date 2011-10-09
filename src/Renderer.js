@@ -1,83 +1,98 @@
 var Renderer = Class.$extend({
+	
+	__init__: function(){
+	    this.panel = null;
+	    this.panelClasses = ["innerComponentDiv"];
+	    this.container = document.body;
+	    this.self = this;
+	},
 
-    __init__: function () {
-		this.panel = null;
-this.panelClasses = ["innerComponentDiv"];
-      this.container = document.body;
+    setContainer:function(aContainer) {
+        this.container = document.getElementById(aContainer);
     },
 
-    setContainer: function (aContainer) {
-        this.container = $(aContainer);
-    },
-
-    getContainer: function () {
+	getContainer: function() {
         return this.container;
     },
 
-    innerDivName: function (componentName) {
-        var divNameSuffix = "_inner"
-        return componentName + divNameSuffix;
-    },
-
-    render: function (component) {
+    render: function(component) {
         if (!this.isDrawn()) {
             this.draw(component);
         }
         this.update(component)
     },
 
-    draw: function (component) {
-        this.panel = new Element('div', {
-            'id': this.innerDivName(component.getName())
-        }).inject(this.container);
-
-        this.setCurrentClasses();
-    },
-
-    isDrawn: function () {
-        return this.panel;
-    },
-
-    update: function (component) {
+    update: function(component) {
         if (this.isDrawn()) {
             this.updateWhenDrawn(component);
         }
     },
 
-    updateWhenDrawn: function (component) {
-if(component.getText() != ''){
-this.panel.set('text', component.getText());
-}
-    },
+    erase: function() {
+        var erase = this.panel;
 
-    erase: function () {
-        if (this.isDrawn()) {
-            this.panel.destroy();
+        if (erase) {
+            this.container.removeChild(erase);
         }
     },
 
-    setCurrentClasses: function () {
+    addClass: function(aClass) {
+        this.panelClasses.push(aClass);
+        if (this.isDrawn()) {
+            this.panel.className += ' ' + aClass;
+        }
+    },
+
+    removeClass: function(aClass) {
+        this.eraseClassFromPanel(this.panelClasses, aClass); // @TODO
+        if (this.isDrawn()) {
+            var reg = new RegExp("(^|\\s)" + aClass + "(\\s|$)", "g");
+            this.panel.className = this.panel.className.replace(reg, '');
+        }
+    },
+
+    getCurrentClasses: function() {
+        return this.panelClasses;
+    },
+
+    innerDivName: function(componentName) {
+        var divNameSuffix = "_inner"
+        return componentName + divNameSuffix;
+    },
+
+    draw: function(component) {
+        var divID = this.innerDivName(component.getName());
+
+        this.panel = document.createElement('div');
+        this.panel.id = divID;
+        this.container.appendChild(this.panel);
+
+        this.setCurrentClasses();
+    },
+
+    updateWhenDrawn: function(component) {
+        if (component.getText()) {
+            this.panel.set('text', component.getText());
+        }
+    },
+
+    setCurrentClasses :function() {
         for (var i = 0, oneClass; oneClass = this.panelClasses[i]; i++) {
             this.panel.addClass(oneClass);
         }
     },
 
-    addClass: function (aClass) {
-        this.panelClasses.push(aClass);
-        if (this.panel) {
-            this.panel.addClass(aClass);
-        }
+    isDrawn: function() {
+        return this.panel;
     },
 
-    removeClass: function (aClass) {
-        this.panelClasses.erase(aClass);
-        if (this.panel) {
-            this.panel.removeClass(aClass);
+    eraseClassFromPanel: function(arrayName, arrayElement) {
+        for (var i = 0, len = arrayName.length; i < len; i++) {
+            if (arrayName[i] === arrayElement) {
+                arrayName.splice(i, 1);
+            }
         }
-    },
-
-    getCurrentClasses: function () {
-        return this.panelClasses;
-    },
+        return arrayName;
+    }
 
 });	

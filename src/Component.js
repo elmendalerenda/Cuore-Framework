@@ -1,4 +1,5 @@
 var Component = Class.$extend({
+    
     __init__: function () {
         this.LABELSERVICENAME = 'LABELS';
         this.name = 'aComponent';
